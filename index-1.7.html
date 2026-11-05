@@ -908,16 +908,16 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBeach()
  let index=0,lastDay='',todayHistory=null;
  const dayKey=()=>{const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'2-digit',day:'2-digit'}).formatToParts(new Date());return parts.find(p=>p.type==='month').value+'-'+parts.find(p=>p.type==='day').value};
  const dayNumber=()=>Math.floor(Date.now()/86400000);
- function render(){let day=dayNumber(),kind=index%5,entry,category;
- if(kind===0){category='DAD JOKE';entry=jokes[day%jokes.length]}
- if(kind===1){category='BAR TRIVIA';entry=trivia[day%trivia.length]}
- if(kind===2){category='WORD OF THE DAY';entry=words[day%words.length]}
- if(kind===4){category='PICKLEBALL CORNER';entry=pickleball[day%pickleball.length]}
- if(kind===3){let h=todayHistory||history[dayKey()];category='THIS DAY IN HISTORY';entry=h?['On this date in '+h[0]+'…',h[1]]:['ON THIS DATE','No verified historical event available for today.']}
+ function render(){let day=dayNumber(),kind=index%7,entry,category;
+ if(kind===0){category='GUESS THE CLASSIC ROCK LYRIC';entry=['Which song includes the lyric: “All that glitters is gold”?','Answer revealed on slide 7 of 7.']}\n if(kind===6){category='CLASSIC ROCK LYRIC — ANSWER';entry=['Stairway to Heaven','Led Zeppelin']}\n if(kind===1){category='DAD JOKE';entry=jokes[day%jokes.length]}
+ if(kind===2){category='BAR TRIVIA';entry=trivia[day%trivia.length]}
+ if(kind===3){category='WORD OF THE DAY';entry=words[day%words.length]}
+ if(kind===5){category='PICKLEBALL CORNER';entry=pickleball[day%pickleball.length]}
+ if(kind===4){let h=todayHistory||history[dayKey()];category='THIS DAY IN HISTORY';entry=h?['On this date in '+h[0]+'…',h[1]]:['ON THIS DATE','No verified historical event available for today.']}
  document.getElementById('garage-fun-category').textContent=category;
  document.getElementById('garage-fun-question').textContent=entry[0];
  document.getElementById('garage-fun-answer').textContent=entry[1];
- document.getElementById('garage-fun-count').textContent=(kind+1)+' / 5';}
+ document.getElementById('garage-fun-count').textContent=(kind+1)+' / 7';}
  async function refreshHistory(){
   const key=dayKey(),parts=key.split('-');
   try{
@@ -933,7 +933,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBeach()
  }
  setInterval(()=>{if(lastDay!==dayKey()){lastDay=dayKey();todayHistory=null;refreshHistory()}},60000);
  refreshHistory();
- function next(){index=(index+1)%5;render()}
+ function next(){index=(index+1)%7;render()}
  document.getElementById('garage-fun-next').addEventListener('click',next);
  render();setInterval(next,25000);
 })();
@@ -1149,4 +1149,24 @@ header #theme option:checked{background:#ffcb46!important;color:#081c39!importan
 .garage-forecast-day b{color:#ffe5a3!important}.garage-forecast-day span{font-weight:700!important}.garage-forecast-day small{font-size:.9em!important;color:#d4e7ff!important}
 </style><style id="garage-six-day-fit-20261105">
 .forecast-half #forecast{grid-template-columns:repeat(2,minmax(0,1fr))!important;grid-template-rows:repeat(3,minmax(0,1fr))!important;gap:2px 5px!important}
-</style></body></html>
+</style><style id="holiday-remote-menu-v3">
+#theme{position:absolute!important;opacity:0!important;pointer-events:none!important;width:1px!important;height:1px!important}
+.holiday-custom{position:relative;display:inline-flex;align-items:center;z-index:10000}
+.holiday-trigger{background:#164e9a;color:white;border:2px solid #89dfff;border-radius:7px;padding:5px 10px;font-weight:900;font-size:clamp(11px,.85vw,17px);white-space:nowrap;min-width:115px;text-align:left}
+.holiday-trigger:focus,.holiday-trigger:focus-visible{outline:4px solid #ffde36!important;box-shadow:0 0 0 4px #ff9d00,0 0 20px #ffeb4c!important;background:#225ec1!important}
+.holiday-menu{display:none;position:absolute;top:100%;right:0;width:clamp(220px,23vw,370px);max-height:min(68vh,650px);overflow-y:auto;background:#061d40;border:3px solid #ffda35;border-radius:10px;box-shadow:0 6px 25px #000c;padding:4px;z-index:10001}
+.holiday-menu.open{display:block}
+.holiday-option{display:block;width:100%;padding:9px 13px;margin:2px 0;background:#12335c;color:white;border:2px solid transparent;border-radius:5px;text-align:left;font-size:clamp(14px,1.1vw,22px);font-weight:800}
+.holiday-option[aria-selected="true"]{border-color:#73e9ff;background:#18539a}
+.holiday-option:focus,.holiday-option:focus-visible{outline:3px solid #fff200!important;outline-offset:-3px!important;background:#ffcb37!important;color:#091d3e!important;box-shadow:inset 0 0 0 2px #ff7b00!important}
+</style><script id="holiday-remote-menu-script-v3">(function(){
+function init(){const select=document.getElementById('theme');if(!select||document.getElementById('holiday-remote-trigger'))return;const wrapper=document.createElement('div');wrapper.className='holiday-custom';const trigger=document.createElement('button');trigger.id='holiday-remote-trigger';trigger.className='holiday-trigger';trigger.type='button';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');const menu=document.createElement('div');menu.className='holiday-menu';menu.setAttribute('role','listbox');wrapper.append(trigger,menu);select.insertAdjacentElement('afterend',wrapper);
+function sync(){trigger.textContent=(select.selectedOptions[0]?.textContent||'Choose holiday')+' ▾';Array.from(menu.children).forEach(b=>b.setAttribute('aria-selected',String(b.dataset.value===select.value)))}
+function close(){menu.classList.remove('open');trigger.setAttribute('aria-expanded','false');trigger.focus()}
+function choose(v){select.value=v;select.dispatchEvent(new Event('change',{bubbles:true}));sync();close()}
+Array.from(select.options).forEach(o=>{let b=document.createElement('button');b.type='button';b.className='holiday-option';b.dataset.value=o.value;b.textContent=o.textContent;b.setAttribute('role','option');b.addEventListener('click',()=>choose(o.value));b.addEventListener('keydown',e=>{let arr=Array.from(menu.children),i=arr.indexOf(b);if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();arr[(i+(e.key==='ArrowDown'?1:-1)+arr.length)%arr.length].focus()}else if(e.key==='Escape'||e.key==='Backspace'){e.preventDefault();close()}});menu.appendChild(b)});
+trigger.addEventListener('click',()=>{let opening=!menu.classList.contains('open');menu.classList.toggle('open',opening);trigger.setAttribute('aria-expanded',String(opening));if(opening){sync();let chosen=Array.from(menu.children).find(b=>b.dataset.value===select.value)||menu.firstChild;chosen.focus();chosen.scrollIntoView({block:'nearest'})}});
+document.addEventListener('click',e=>{if(!wrapper.contains(e.target)&&menu.classList.contains('open')){menu.classList.remove('open');trigger.setAttribute('aria-expanded','false')}});
+select.addEventListener('change',sync);sync();
+}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();</script></body></html>
