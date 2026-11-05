@@ -1356,4 +1356,19 @@ var close=m.querySelector('.radar-top button');if(close)close.addEventListener('
 document.querySelectorAll('.radar-preview iframe,.radar-modal iframe').forEach(function(f){f.setAttribute('loading','lazy');f.setAttribute('fetchpriority','low');if(f.closest('.radar-preview')){f.setAttribute('tabindex','-1')}});
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ready);else ready();
+})();</script><style id="garage-radar-direct-button-v28">
+.radar-preview{isolation:isolate!important;position:relative!important}
+#garage-radar-open-button{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;border:0!important;margin:0!important;padding:0!important;background:transparent!important;z-index:2147480!important;cursor:pointer!important;pointer-events:auto!important;touch-action:manipulation!important}
+#garage-radar-open-button:focus-visible{outline:4px solid #ffdf68!important;outline-offset:-4px!important}
+.radar-preview .radar-hit{z-index:2147481!important;pointer-events:none!important}
+#radarModal.open{display:flex!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+#radarModal.open #radarMapBig{display:block!important}
+</style><script id="garage-radar-direct-button-script-v28">(function(){
+function init(){
+var p=document.querySelector('.radar-preview'),m=document.getElementById('radarModal');if(!p||!m||document.getElementById('garage-radar-open-button'))return;
+var b=document.createElement('button');b.id='garage-radar-open-button';b.type='button';b.setAttribute('aria-label','Expand Ohio live weather radar');b.title='Expand Ohio live weather radar';p.appendChild(b);
+function open(e){e.preventDefault();e.stopImmediatePropagation();m.classList.add('open');m.setAttribute('aria-hidden','false');try{if(typeof window.openRadar==='function')window.openRadar()}catch(err){console.warn('Expanded radar fallback:',err);var f=m.querySelector('iframe');if(f)f.style.display='block'}}
+b.addEventListener('click',open,true);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();</script></body></html>
