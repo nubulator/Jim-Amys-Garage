@@ -1120,4 +1120,19 @@ main>.side{grid-template-rows:minmax(0,9%) minmax(0,58%) minmax(0,33%)!important
 .garage-fun-question{font-size:clamp(15px,1.48vw,29px)!important}
 .garage-fun-answer{font-size:clamp(13px,1.25vw,24px)!important}
 
-</style></body></html>
+</style><style id="garage-header-fun-fit-v3">
+header h1{margin-left:0!important;padding-left:clamp(4px,.55vw,12px)!important;transform:translateY(3px)!important}
+header #decor{transform:translate(0,3px)!important}
+header #clock{top:calc(50% + 3px)!important}
+header .header-right{top:calc(50% + 3px)!important}
+.garage-fun-content{min-height:0!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:clamp(2px,.4vh,6px)!important;padding:3px 9px clamp(29px,3.2vh,46px)!important}
+.garage-fun-question,.garage-fun-answer{max-width:100%!important;min-width:0!important;overflow-wrap:break-word!important;word-break:normal!important;white-space:normal!important;line-height:1.12!important}
+</style><script id="garage-fun-auto-fit-v3">(function(){
+function fit(){const box=document.getElementById('garage-fun-content');if(!box)return;const q=document.getElementById('garage-fun-question'),a=document.getElementById('garage-fun-answer');if(!q||!a)return;
+q.style.setProperty('font-size','clamp(14px,1.45vw,28px)','important');a.style.setProperty('font-size','clamp(12px,1.24vw,24px)','important');
+let qSize=parseFloat(getComputedStyle(q).fontSize),aSize=parseFloat(getComputedStyle(a).fontSize);
+for(let i=0;i<16&&box.scrollHeight>box.clientHeight+2;i++){qSize=Math.max(11,qSize-1);aSize=Math.max(10,aSize-.85);q.style.setProperty('font-size',qSize+'px','important');a.style.setProperty('font-size',aSize+'px','important');}
+}
+function init(){const box=document.getElementById('garage-fun-content');if(!box)return;new MutationObserver(fit).observe(box,{childList:true,characterData:true,subtree:true});window.addEventListener('resize',fit);fit();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();</script></body></html>
