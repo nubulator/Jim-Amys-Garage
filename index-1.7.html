@@ -653,7 +653,7 @@ if(d>=twoWeeksBefore(e)&&d<=e)return 'easter';
 if(d>=twoWeeksBefore(pat)&&d<=pat)return 'patrick';
 if(d>=twoWeeksBefore(ground)&&d<=ground)return 'groundhog';
 if(d>=day(y,9,22))return 'fall';if(d>=day(y,6,21))return 'summer';if(d>=day(y,3,20))return 'spring';return 'winter'}
-const themeInfo={classic:['CLASSIC SPORTS BAR','★ ✦ ★'],winter:['WINTER','❄️ ☃️ ❄️'],spring:['SPRING','🌷 🌼 🦋'],summer:['SUMMER','☀️ 🌴 ☀️'],fall:['AUTUMN','🍁 🍂 🍁'],groundhog:['GROUNDHOG DAY','🦫 🌤️ 🦫'],patrick:["ST. PATRICK’S DAY",'☘️ 🍀 ☘️'],easter:['EASTER','🐰 🥚 🌷'],memorial:['MEMORIAL DAY','🇺🇸 ★ 🇺🇸'],july4:['FOURTH OF JULY','🎆 🇺🇸 🎇'],halloween:['HALLOWEEN','🎃 👻 🕸️'],thanksgiving:['HAPPY THANKSGIVING','🍁 🦃 🍂'],christmas:['CHRISTMAS','🎄 🎁 ❄️'],newyear:['NEW YEAR','🎉 ✨ 🥂']};
+const themeInfo={classic:['CLASSIC SPORTS BAR','★ ✦ ★'],winter:['WINTER','❄️ ☃️ ❄️'],spring:['SPRING','🌷 🌼 🦋'],summer:['SUMMER','☀️ 🌴 ☀️'],fall:['HAPPY FALL','🍁 🍂 🍁'],groundhog:['GROUNDHOG DAY','🦫 🌤️ 🦫'],patrick:["ST. PATRICK’S DAY",'☘️ 🍀 ☘️'],easter:['EASTER','🐰 🥚 🌷'],memorial:['MEMORIAL DAY','🇺🇸 ★ 🇺🇸'],july4:['FOURTH OF JULY','🎆 🇺🇸 🎇'],halloween:['HALLOWEEN','🎃 👻 🕸️'],thanksgiving:['HAPPY THANKSGIVING','🍁 🦃 🍂'],christmas:['CHRISTMAS','🎄 🎁 ❄️'],newyear:['NEW YEAR','🎉 ✨ 🥂']};
 function setTheme(){let t=$('theme').value;if(t==='auto')t=themeForDate(new Date());document.body.className=t;let info=themeInfo[t]||themeInfo.classic;$('holiday').textContent='';$('decor').innerHTML='<span class="garage-season-left" aria-hidden="true">'+safe((info[1]||'').split(' ').slice(0,2).join(' '))+'</span><span class="holiday-words">'+safe(info[0].toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))+'</span><span class="garage-season-right" aria-hidden="true">'+safe((info[1]||'').split(' ').slice(-2).join(' '))+'</span>';}
 $('theme').innerHTML='<option value="auto">Auto holiday</option>'+Object.entries(themeInfo).map(([id,v])=>'<option value="'+id+'">'+v[0]+'</option>').join('');
 $('theme').value=localStorage.getItem('theme')||'auto';$('theme').onchange=()=>{localStorage.setItem('theme',$('theme').value);setTheme()};setTheme();
@@ -1076,4 +1076,8 @@ function refresh(){
 }
 refresh();setInterval(refresh,2000);
 })();
-</script></body></html>
+</script><style id="weather-icon-current-panel-v2">
+.current-weather-panel{position:relative!important;overflow:hidden!important}
+.current-weather-panel #garage-weather-art{position:absolute!important;right:clamp(14px,2.1vw,34px)!important;top:50%!important;transform:translateY(-50%)!important;display:flex!important;align-items:center!important;justify-content:center!important;width:clamp(44px,5.2vw,82px)!important;height:clamp(44px,5.2vw,82px)!important;font-size:clamp(36px,4.6vw,70px)!important;line-height:1!important;z-index:2!important;animation:none!important;filter:drop-shadow(0 0 7px #80c9ff)!important}
+.current-weather-panel #weather{padding-right:clamp(58px,7.8vw,112px)!important}
+</style><script id="move-current-weather-icon-v2">(function(){function move(){const weather=document.getElementById('weather');const icon=document.getElementById('garage-weather-art');if(!weather||!icon)return;const panel=weather.closest('.panel');if(!panel)return;panel.classList.add('current-weather-panel');panel.appendChild(icon)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',move);else move()})();</script></body></html>
