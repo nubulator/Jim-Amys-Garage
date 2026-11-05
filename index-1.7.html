@@ -1266,4 +1266,16 @@ header #clock{font-size:clamp(15px,1.36vw,26px)!important;line-height:1.05!impor
 #garage-fun-standalone > *{position:relative;z-index:1}
 #garage-fun-standalone .garage-fun-content{position:relative;z-index:2;text-shadow:0 2px 4px #061128,0 0 8px #061128}
 </style>
+
+<style id="garage-pinball-visible-and-weather-v19">
+/* Put the playfield on the actual inner fun panel; its opaque fill hid the previous artwork. */
+#garage-fun-standalone .garage-fun{position:relative!important;isolation:isolate!important;background:radial-gradient(ellipse at center,#17375e,#091c3d 80%)!important}
+#garage-fun-standalone .garage-fun::before{content:"";position:absolute;inset:8% 5% 5%;z-index:0;pointer-events:none;opacity:.34;border:3px double #ffca70;border-radius:42% 42% 12% 12%/24% 24% 8% 8%;background:radial-gradient(circle at 26% 28%,#ffe19c 0 3%,#f15772 3.5% 5.5%,#ffd77c 6% 7%,transparent 7.5%),radial-gradient(circle at 74% 28%,#ffe19c 0 3%,#f15772 3.5% 5.5%,#ffd77c 6% 7%,transparent 7.5%),radial-gradient(circle at 50% 49%,#ffe19c 0 4%,#f15772 4.5% 7%,#ffd77c 7.5% 8.5%,transparent 9%),linear-gradient(153deg,transparent 42%,#ffbd68 44% 48%,transparent 50%) 19% 90%/35% 30% no-repeat,linear-gradient(27deg,transparent 42%,#ffbd68 44% 48%,transparent 50%) 81% 90%/35% 30% no-repeat,repeating-linear-gradient(140deg,transparent 0 37px,#8cb7dd55 38px 39px,transparent 40px 76px);box-shadow:inset 0 0 0 8px #254e80,inset 0 0 0 10px #f9ad63}
+#garage-fun-standalone .garage-fun::after{content:"10  •  BONUS  •  1000";position:absolute;bottom:12%;left:0;right:0;text-align:center;letter-spacing:.5em;font-weight:900;font-size:clamp(8px,.85vw,16px);color:#f8c67a;opacity:.25;pointer-events:none;z-index:0}
+#garage-fun-standalone .garage-fun > *{position:relative;z-index:1}
+#garage-fun-standalone .garage-fun-content{background:transparent!important}
+#garage-weather-standalone{font-size:1.18em!important}
+#garage-weather-standalone h2{font-size:clamp(13px,1.16vw,22px)!important}
+header #decor{transform:translateX(clamp(5px,.65vw,12px))!important}
+</style>
 </body></html>
