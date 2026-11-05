@@ -1257,4 +1257,13 @@ header #clock{font-size:clamp(15px,1.36vw,26px)!important;line-height:1.05!impor
 #garage-forecast-standalone .garage-forecast-day small{font-size:.9em!important}
 #garage-weather-standalone{font-size:1.09em!important}
 #garage-weather-standalone h2,#garage-forecast-standalone h2{font-size:clamp(12px,1.05vw,20px)!important}
-</style></body></html>
+</style>
+<style id="garage-1970s-pinball-playfield-watermark-v18">
+/* Faded 1970s pinball playfield, confined to Garage Fun Zone. */
+#garage-fun-standalone{position:relative!important;isolation:isolate!important;overflow:hidden!important;background:radial-gradient(ellipse at 50% 48%,#163b6c 0%,#071b42 72%,#070f29 100%)!important}
+#garage-fun-standalone::before{content:"";position:absolute;inset:9% 7% 7%;z-index:0;pointer-events:none;opacity:.19;background:radial-gradient(circle at 29% 27%,#f9d26d 0 2%,#a72b55 2.5% 4%,#efc978 4.5% 5%,transparent 5.5%),radial-gradient(circle at 71% 27%,#f9d26d 0 2%,#a72b55 2.5% 4%,#efc978 4.5% 5%,transparent 5.5%),radial-gradient(circle at 50% 43%,#f9d26d 0 2.5%,#a72b55 3% 5%,#efc978 5.5% 6%,transparent 6.5%),linear-gradient(155deg,transparent 0 47%,#f5b85b 48% 49%,transparent 50%) 17% 75%/30% 23% no-repeat,linear-gradient(25deg,transparent 0 47%,#f5b85b 48% 49%,transparent 50%) 83% 75%/30% 23% no-repeat,repeating-linear-gradient(135deg,transparent 0 25px,#df8c5b 26px 27px,transparent 28px 55px);border:3px double #e7b16d;border-radius:46% 46% 15% 15%/25% 25% 9% 9%;box-shadow:inset 0 0 0 9px #142b5c,inset 0 0 0 11px #d89a6e}
+#garage-fun-standalone::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:.12;background:repeating-linear-gradient(0deg,transparent 0 5px,#f2a664 6px,transparent 7px 26px);mask-image:linear-gradient(to bottom,transparent 5%,black 28%,black 80%,transparent 97%)}
+#garage-fun-standalone > *{position:relative;z-index:1}
+#garage-fun-standalone .garage-fun-content{position:relative;z-index:2;text-shadow:0 2px 4px #061128,0 0 8px #061128}
+</style>
+</body></html>
