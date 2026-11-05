@@ -536,6 +536,20 @@ header .header-right #status{font-size:clamp(9px,.85vw,15px)!important;white-spa
 #line-page-controls{display:flex;align-items:center;justify-content:center;gap:12px}
 #line-page-label{font-size:clamp(12px,1vw,19px)}
 @media(max-width:900px){header{grid-template-columns:37% 31% 32%!important}header h1 .neontitle{font-size:clamp(17px,2.2vw,31px)!important}header #decor .holiday-words{font-size:clamp(12px,1.55vw,24px)!important}#league-filters button{font-size:9px;padding:3px 4px}#line-games{grid-template-columns:1fr}}
+</style><style id="garage-wide-layout-20261105">
+/* Remove sponsor strip and reclaim its width for sports and weather. */
+main{grid-template-columns:minmax(0,53fr) minmax(0,47fr)!important;gap:clamp(5px,.5vw,12px)!important}
+main>.sponsor-column{display:none!important}
+main>.board{grid-column:1!important;min-width:0!important}
+main>.side{grid-column:2!important;min-width:0!important}
+header{grid-template-columns:minmax(0,40%) minmax(0,31%) minmax(0,29%)!important}
+header h1{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;overflow:visible!important;padding:0 3px!important}
+header h1 .neontitle{font-size:clamp(27px,3.05vw,59px)!important;letter-spacing:-.035em!important;line-height:1.02!important;white-space:nowrap!important;max-width:100%!important}
+header h1 .neontitle em{font-size:.18em!important}
+header #decor{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:clamp(2px,.45vw,12px)!important;text-align:center!important;min-width:0!important;overflow:hidden!important}
+header #decor .holiday-words{font-size:clamp(22px,2.55vw,48px)!important;line-height:1.05!important;white-space:nowrap!important;text-align:center!important;max-width:100%!important;text-transform:none!important}
+header #decor .garage-season-left,header #decor .garage-season-right{font-size:clamp(15px,1.55vw,29px)!important;flex:0 0 auto!important}
+@media(max-width:900px){header{grid-template-columns:40% 31% 29%!important}header h1 .neontitle{font-size:clamp(23px,3vw,36px)!important}header #decor .holiday-words{font-size:clamp(17px,2.35vw,30px)!important}}
 </style></head><body class="classic"><div id="app"><header><div class="pinball-bulbs" aria-hidden="true"></div><div class="pinball-mechanics" aria-hidden="true"><svg viewBox="0 0 460 118" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="steel"><stop stop-color="#fff"/><stop offset=".25" stop-color="#e6f3ff"/><stop offset=".55" stop-color="#7d8aa9"/><stop offset=".8" stop-color="#26263f"/><stop offset="1" stop-color="#f4d5fc"/></radialGradient><radialGradient id="cap"><stop stop-color="#fff"/><stop offset=".24" stop-color="#fbd6ff"/><stop offset=".5" stop-color="#f32c8a"/><stop offset=".76" stop-color="#6b1e91"/><stop offset="1" stop-color="#170e3b"/></radialGradient><linearGradient id="rubber" x2="0" y2="1"><stop stop-color="#fff5ef"/><stop offset=".25" stop-color="#ff6e6b"/><stop offset=".65" stop-color="#d51d44"/><stop offset="1" stop-color="#580e37"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <g transform="translate(37 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
 <g transform="translate(423 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
@@ -801,18 +815,33 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBeach()
  const trivia=[['Which band released the album 1984?','Van Halen.'],['What is the only U.S. state named after a president?','Washington.'],['In darts, what is the highest score with three darts?','180.'],['Which planet has the most prominent ring system?','Saturn.'],['What is the largest ocean on Earth?','The Pacific Ocean.']];
  const words=[['FLUMMOX','To confuse or completely bewilder.'],['KERFUFFLE','A commotion or fuss.'],['BUMBERSHOOT','An old-fashioned word for an umbrella.'],['GOBSMACKED','Utterly astonished.'],['SKEDADDLE','To leave quickly.']];
  const history={'11-05':['1605','The Gunpowder Plot was discovered in London.'],'07-20':['1969','Apollo 11 astronauts first walked on the Moon.'],'12-17':['1903','The Wright brothers made their first powered flights.'],'08-28':['1963','Martin Luther King Jr. delivered his “I Have a Dream” speech.'],'04-15':['1912','The Titanic sank in the North Atlantic.'],'10-29':['1969','The first ARPANET message was sent.']};
- let index=0,lastDay='';
+ let index=0,lastDay='',todayHistory=null;
  const dayKey=()=>new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'2-digit',day:'2-digit'}).format(new Date());
  const dayNumber=()=>Math.floor(Date.now()/86400000);
  function render(){let day=dayNumber(),kind=index%4,entry,category;
  if(kind===0){category='DAD JOKE';entry=jokes[day%jokes.length]}
  if(kind===1){category='BAR TRIVIA';entry=trivia[day%trivia.length]}
  if(kind===2){category='WORD OF THE DAY';entry=words[day%words.length]}
- if(kind===3){let h=history[dayKey()];category=h?'THIS DAY IN HISTORY':'HISTORY SPOTLIGHT';entry=h?['In '+h[0]+'…',h[1]]:['On July 20, 1969…','Apollo 11 astronauts first walked on the Moon.']}
+ if(kind===3){let h=todayHistory||history[dayKey()];category='THIS DAY IN HISTORY';entry=h?['On this date in '+h[0]+'…',h[1]]:['ON THIS DATE','Checking today’s historical events…']}
  document.getElementById('garage-fun-category').textContent=category;
  document.getElementById('garage-fun-question').textContent=entry[0];
  document.getElementById('garage-fun-answer').textContent=entry[1];
  document.getElementById('garage-fun-count').textContent=(kind+1)+' / 4';}
+ async function refreshHistory(){
+  const key=dayKey(),parts=key.split('-');
+  try{
+   const url='https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/'+parts[0]+'/'+parts[1];
+   const response=await fetch(url,{cache:'no-store',headers:{'Accept':'application/json'}});
+   if(!response.ok)throw Error('History service unavailable');
+   const payload=await response.json();
+   const events=(payload.events||[]).filter(e=>e.year&&e.text&&e.text.length>=35&&e.text.length<=220);
+   const selected=events.find(e=>e.year>=1700&&e.year<=1999)||events[0];
+   if(selected)todayHistory=[String(selected.year),selected.text.replace(/<[^>]*>/g,'')];
+  }catch(err){console.warn('Date-specific history unavailable',err)}
+  render();
+ }
+ setInterval(()=>{if(lastDay!==dayKey()){lastDay=dayKey();todayHistory=null;refreshHistory()}},60000);
+ refreshHistory();
  function next(){index=(index+1)%4;render()}
  document.getElementById('garage-fun-next').addEventListener('click',next);
  render();setInterval(next,25000);
