@@ -1169,25 +1169,32 @@ trigger.addEventListener('click',()=>{let opening=!menu.classList.contains('open
 document.addEventListener('click',e=>{if(!wrapper.contains(e.target)&&menu.classList.contains('open')){menu.classList.remove('open');trigger.setAttribute('aria-expanded','false')}});
 select.addEventListener('change',sync);sync();
 }if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-})();</script><style id="tv-layout-repair-20261105">
-/* Reserve non-overlapping header zones on 16:9 televisions. */
-header{display:grid!important;grid-template-columns:minmax(0,28%) minmax(0,44%) minmax(0,28%)!important;align-items:center!important;overflow:visible!important;position:relative!important}
-header h1{grid-column:1!important;position:relative!important;inset:auto!important;transform:none!important;margin:0!important;min-width:0!important;z-index:2!important}
-header #decor{grid-column:2!important;position:relative!important;inset:auto!important;transform:none!important;width:100%!important;max-width:100%!important;text-align:center!important;white-space:normal!important;overflow:hidden!important;z-index:2!important;pointer-events:none!important}
-header .controls{grid-column:3!important;position:relative!important;inset:auto!important;transform:none!important;display:flex!important;align-items:center!important;justify-content:flex-end!important;min-width:0!important;z-index:4!important}
-header #clock{position:relative!important;inset:auto!important;transform:none!important;white-space:nowrap!important}
-header .header-right{position:relative!important;inset:auto!important;transform:none!important;width:auto!important;max-width:100%!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:flex-end!important;gap:2px!important}
-header #dashboard-refresh{font-size:clamp(9px,.72vw,13px)!important;padding:2px 5px!important}
-header #status{font-size:clamp(9px,.75vw,14px)!important;white-space:nowrap!important}
-header .holiday-custom{max-width:100%!important}
-header .holiday-trigger{max-width:100%!important;min-width:0!important;font-size:clamp(10px,.8vw,15px)!important;padding:4px 7px!important;overflow:hidden!important;text-overflow:ellipsis!important}
-header .holiday-menu{z-index:20000!important}
+})();</script><script id="garage-fun-loading-fallback">(function(){function check(){let q=document.getElementById('garage-fun-question');if(q&&/^loading/i.test(q.textContent.trim())){q.textContent='Why did the bicycle fall over?';let a=document.getElementById('garage-fun-answer');if(a)a.textContent='Because it was two-tired.';}}window.addEventListener('load',()=>setTimeout(check,3500));})();</script><style id="tv-header-structured-v4">
+header{position:relative!important;display:grid!important;grid-template-columns:minmax(0,28%) minmax(0,40%) minmax(0,32%)!important;align-items:center!important;overflow:visible!important}
+header h1{grid-column:1!important;grid-row:1!important;position:relative!important;left:auto!important;top:auto!important;right:auto!important;transform:none!important;margin:0!important;min-width:0!important;z-index:2!important}
+header h1 .neontitle{font-size:clamp(17px,2.3vw,43px)!important;white-space:nowrap!important}
+header #decor{grid-column:2!important;grid-row:1!important;position:relative!important;inset:auto!important;left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;transform:none!important;width:100%!important;min-width:0!important;max-width:100%!important;overflow:hidden!important;text-align:center!important;white-space:nowrap!important;font-size:clamp(12px,1.45vw,27px)!important;z-index:1!important;pointer-events:none!important}
+header .controls{grid-column:3!important;grid-row:1!important;position:relative!important;inset:auto!important;transform:none!important;min-width:0!important;width:100%!important;display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)!important;align-items:center!important;gap:5px!important;z-index:5!important}
+header #clock{grid-column:1!important;position:relative!important;inset:auto!important;transform:none!important;max-width:100%!important;font-size:clamp(10px,1.1vw,20px)!important;white-space:nowrap!important}
+header .header-right{grid-column:2!important;position:relative!important;inset:auto!important;transform:none!important;width:100%!important;max-width:100%!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:1px!important}
+header .holiday-custom{width:100%!important;max-width:100%!important;min-width:0!important}
+header .holiday-trigger{width:100%!important;min-width:0!important;max-width:100%!important;font-size:clamp(9px,.73vw,14px)!important;padding:3px 4px!important;overflow:hidden!important;text-overflow:ellipsis!important}
+header #dashboard-refresh{font-size:clamp(9px,.7vw,13px)!important;padding:1px 4px!important;align-self:flex-end!important}
+header #status{font-size:clamp(8px,.65vw,12px)!important;text-align:right!important;white-space:nowrap!important}
 header #holiday{display:none!important}
-</style><style id="garage-fun-space-repair">
-main>.side{grid-template-rows:minmax(0,11%) minmax(0,48%) minmax(0,41%)!important}
-.beach-forecast-panel{min-height:0!important}
-.garage-fun{min-height:0!important;display:flex!important;flex-direction:column!important}
-.garage-fun-content{flex:1!important;min-height:0!important;padding:8px 12px 37px!important;overflow:hidden!important}
-.garage-fun-question{font-size:clamp(14px,1.28vw,25px)!important;line-height:1.12!important}
-.garage-fun-answer{font-size:clamp(12px,1.05vw,21px)!important}
-</style><script id="garage-fun-loading-fallback">(function(){function check(){let q=document.getElementById('garage-fun-question');if(q&&/^loading/i.test(q.textContent.trim())){q.textContent='Why did the bicycle fall over?';let a=document.getElementById('garage-fun-answer');if(a)a.textContent='Because it was two-tired.';}}window.addEventListener('load',()=>setTimeout(check,3500));})();</script></body></html>
+.holiday-menu{right:0!important;top:100%!important;max-height:65vh!important;overflow:auto!important}
+</style><style id="garage-stacked-right-v4">
+main>.side{display:grid!important;grid-template-rows:minmax(0,10%) minmax(0,18%) minmax(0,35%) minmax(0,37%)!important;gap:clamp(3px,.35vh,7px)!important;min-height:0!important}
+main>.side>.panel:first-child{grid-row:1!important;min-height:0!important}
+#garage-forecast-standalone{grid-row:2!important;min-height:0!important;overflow:hidden!important;padding:3px 7px!important}
+#garage-forecast-standalone h2{font-size:clamp(10px,.85vw,16px)!important;margin:0 0 2px!important}
+#garage-forecast-standalone #forecast{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;grid-template-rows:repeat(2,minmax(0,1fr))!important;gap:1px 5px!important;font-size:clamp(9px,.75vw,14px)!important;line-height:1.06!important;overflow:hidden!important}
+#garage-forecast-standalone .garage-forecast-day{display:flex!important;flex-direction:row!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;min-width:0!important}
+#garage-forecast-standalone .garage-forecast-day small{font-size:.85em!important}
+main>.side>#garage-radar-standalone{grid-row:3!important;min-height:0!important}
+main>.side>#garage-fun-standalone{grid-row:4!important;min-height:0!important;overflow:hidden!important;padding:3px!important}
+#garage-fun-standalone .garage-fun{width:100%!important;height:100%!important;display:flex!important;flex-direction:column!important;min-height:0!important}
+#garage-fun-standalone .garage-fun-content{flex:1!important;min-height:0!important;overflow:hidden!important;padding:4px 12px 27px!important;display:flex!important;flex-direction:column!important;justify-content:center!important}
+#garage-fun-standalone .garage-fun-question{font-size:clamp(16px,1.7vw,32px)!important;line-height:1.1!important;overflow-wrap:break-word!important}
+#garage-fun-standalone .garage-fun-answer{font-size:clamp(13px,1.25vw,24px)!important;line-height:1.12!important}
+</style><script id="garage-reorder-right-v4">(function(){function run(){let side=document.querySelector('main>.side');if(!side)return;let combined=side.querySelector('.beach-forecast-panel');if(!combined)return;let radar=side.querySelector('.radar-preview')?.closest('.panel');if(radar)radar.id='garage-radar-standalone';let forecast=combined.querySelector('.forecast-half'),fun=combined.querySelector('#garage-fun');if(!forecast||!fun)return;let f=document.createElement('div');f.className='panel';f.id='garage-forecast-standalone';f.appendChild(forecast);let g=document.createElement('div');g.className='panel';g.id='garage-fun-standalone';g.appendChild(fun);side.insertBefore(f,radar||combined);side.appendChild(g);combined.remove();}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run()})();</script></body></html>
