@@ -1371,4 +1371,21 @@ function open(e){e.preventDefault();e.stopImmediatePropagation();m.classList.add
 b.addEventListener('click',open,true);
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();</script><style id="garage-radar-visible-control-v29">
+#garage-radar-expand-control{display:inline-flex!important;align-items:center;justify-content:center;position:relative!important;z-index:2147482!important;pointer-events:auto!important;cursor:pointer!important;color:#fff!important;background:#1264ab!important;border:2px solid #9fe9ff!important;border-radius:7px!important;padding:4px 10px!important;font-size:clamp(11px,.95vw,19px)!important;font-weight:900!important;white-space:nowrap!important;box-shadow:0 0 7px #00c9ff!important}
+#garage-radar-expand-control:focus{outline:3px solid #ffdc55!important}
+.radar-modal.open{position:fixed!important;inset:0!important;z-index:2147483640!important;display:flex!important}
+</style><script id="garage-radar-visible-control-script-v29">(function(){
+function init(){
+var preview=document.querySelector('.radar-preview'),modal=document.getElementById('radarModal');if(!preview||!modal)return;
+var heading=preview.previousElementSibling;if(!heading||heading.tagName!=='H2')heading=preview.parentElement.querySelector('h2');
+if(!heading)return;
+var old=heading.querySelector('span');if(old)old.style.display='none';
+var btn=document.createElement('button');btn.type='button';btn.id='garage-radar-expand-control';btn.textContent='⛶ EXPAND RADAR';btn.setAttribute('aria-label','Expand Ohio live weather radar');
+heading.style.display='flex';heading.style.alignItems='center';heading.style.justifyContent='space-between';heading.style.gap='8px';heading.appendChild(btn);
+function open(e){if(e){e.preventDefault();e.stopPropagation()}modal.classList.add('open');modal.setAttribute('aria-hidden','false');try{if(typeof window.openRadar==='function')window.openRadar()}catch(err){var frame=modal.querySelector('iframe');if(frame)frame.style.display='block';console.warn(err)}}
+btn.addEventListener('click',open);
+btn.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();open(e)}});
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();</script></body></html>
