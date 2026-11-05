@@ -606,6 +606,10 @@ header{grid-row:1!important}
 #garage-weather-art .wx-desc{font-size:clamp(9px,.85vw,16px);font-weight:800;color:#e4f3ff;text-align:center}
 #garage-weather-art.rain .wx-graphic,#garage-weather-art.snow .wx-graphic{animation-duration:1.2s}
 @keyframes garage-wx-bob{50%{transform:translateY(-5px)}}
+</style><style id="garage-header-center-and-weather-v2">
+header h1,header #decor,header .controls{translate:0 clamp(3px,.65vh,11px)!important}
+#garage-weather-art{top:39%!important;bottom:2%!important}
+#garage-weather-art .wx-graphic{font-size:clamp(32px,4.8vw,80px)!important}
 </style></head><body class="classic"><div id="app"><header><div class="pinball-bulbs" aria-hidden="true"></div><div class="pinball-mechanics" aria-hidden="true"><svg viewBox="0 0 460 118" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="steel"><stop stop-color="#fff"/><stop offset=".25" stop-color="#e6f3ff"/><stop offset=".55" stop-color="#7d8aa9"/><stop offset=".8" stop-color="#26263f"/><stop offset="1" stop-color="#f4d5fc"/></radialGradient><radialGradient id="cap"><stop stop-color="#fff"/><stop offset=".24" stop-color="#fbd6ff"/><stop offset=".5" stop-color="#f32c8a"/><stop offset=".76" stop-color="#6b1e91"/><stop offset="1" stop-color="#170e3b"/></radialGradient><linearGradient id="rubber" x2="0" y2="1"><stop stop-color="#fff5ef"/><stop offset=".25" stop-color="#ff6e6b"/><stop offset=".65" stop-color="#d51d44"/><stop offset="1" stop-color="#580e37"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <g transform="translate(37 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
 <g transform="translate(423 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
@@ -764,7 +768,7 @@ async function sports(){
  $('status').textContent=fresh.length?'● SCORES CONNECTED':'● SCORES UNAVAILABLE';
  $('status').style.color=fresh.length?'#8cebb0':'#ffab87';display()
 }
-async function weather(){try{let r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.0812&longitude=-82.8088&current=temperature_2m,relative_humidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=4');if(!r.ok)throw Error();let j=await r.json();$('weather').textContent=`${Math.round(j.current.temperature_2m)}°F • Humidity ${j.current.relative_humidity_2m}% • Precipitation ${j.current.precipitation} mm`;$('forecast').innerHTML=j.daily.time.map((d,i)=>`${new Date(d+'T12:00').toLocaleDateString('en-US',{weekday:'short'})}: ${Math.round(j.daily.temperature_2m_max[i])}° / ${Math.round(j.daily.temperature_2m_min[i])}° • Rain ${j.daily.precipitation_probability_max[i]}%`).join('<br>')}catch(e){$('weather').textContent='Weather unavailable — retrying';$('forecast').textContent='Forecast temporarily unavailable'}}
+async function weather(){try{let r=await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.0812&longitude=-82.8088&current=temperature_2m,relative_humidity_2m,precipitation,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max&temperature_unit=fahrenheit&timezone=America%2FNew_York&forecast_days=4');if(!r.ok)throw Error();let j=await r.json();window.__garageWeatherConditions=j.current;$('weather').textContent=`${Math.round(j.current.temperature_2m)}°F • Humidity ${j.current.relative_humidity_2m}% • Precipitation ${j.current.precipitation} mm`;$('forecast').innerHTML=j.daily.time.map((d,i)=>`${new Date(d+'T12:00').toLocaleDateString('en-US',{weekday:'short'})}: ${Math.round(j.daily.temperature_2m_max[i])}° / ${Math.round(j.daily.temperature_2m_min[i])}° • Rain ${j.daily.precipitation_probability_max[i]}%`).join('<br>')}catch(e){$('weather').textContent='Weather unavailable — retrying';$('forecast').textContent='Forecast temporarily unavailable'}}
 sports();loadMyTeams();weather();setInterval(sports,60000);setInterval(loadMyTeams,900000);setInterval(weather,600000);setInterval(()=>{if(!dailyLineOpen&&leagueFilter==='ALL'){page++;display()}},15000);setInterval(setTheme,3600000);
 
 // Best-effort screen wake lock. Fire TV may still enforce its own screensaver.
@@ -1043,14 +1047,13 @@ function show(c){
  a.className='wx-graphic';a.textContent=symbol;b.className='wx-desc';b.textContent=desc;
  el.append(a,b);
 }
-async function refresh(){
+function refresh(){
  try{
-  const response=await fetch('https://api.open-meteo.com/v1/forecast?latitude=40.0812&longitude=-82.8088&current=weather_code,is_day&timezone=America%2FNew_York',{cache:'no-store'});
-  if(!response.ok)throw Error('Weather artwork request failed');
-  const data=await response.json();
-  if(data.current)show(data.current);
- }catch(error){el.textContent='';}
+  const conditions=window.__garageWeatherConditions;
+  if(conditions && Number.isFinite(Number(conditions.weather_code)))show(conditions);
+  else if(!el.hasChildNodes()){el.textContent='Waiting for weather…';}
+ }catch(error){el.textContent='Weather illustration unavailable';}
 }
-refresh();setInterval(refresh,600000);
+refresh();setInterval(refresh,2000);
 })();
 </script></body></html>
