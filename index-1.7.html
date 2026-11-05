@@ -477,7 +477,20 @@ header .controls{grid-column:4!important;grid-row:1!important;align-self:center!
  .game.favorite .teams{font-size:clamp(15px,2.4vw,25px)!important}
  .game.favorite .score{font-size:clamp(17px,2.5vw,28px)!important}
 }
-</style></head><body class="classic"><div id="app"><header><div class="pinball-bulbs" aria-hidden="true"></div><div class="pinball-mechanics" aria-hidden="true"><svg viewBox="0 0 460 118" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="steel"><stop stop-color="#fff"/><stop offset=".25" stop-color="#e6f3ff"/><stop offset=".55" stop-color="#7d8aa9"/><stop offset=".8" stop-color="#26263f"/><stop offset="1" stop-color="#f4d5fc"/></radialGradient><radialGradient id="cap"><stop stop-color="#fff"/><stop offset=".24" stop-color="#fbd6ff"/><stop offset=".5" stop-color="#f32c8a"/><stop offset=".76" stop-color="#6b1e91"/><stop offset="1" stop-color="#170e3b"/></radialGradient><linearGradient id="rubber" x2="0" y2="1"><stop stop-color="#fff5ef"/><stop offset=".25" stop-color="#ff6e6b"/><stop offset=".65" stop-color="#d51d44"/><stop offset="1" stop-color="#580e37"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+</style>
+<style id="garage-holiday-upgrade">
+/* Pinball marquee: decorative seasonal title with lights and clear clock. */
+header #decor{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,3.7fr) minmax(0,1fr)!important;gap:4px!important;align-items:center!important;justify-items:center!important;overflow:hidden!important;text-align:center!important;padding:2px 8px!important;isolation:isolate!important}
+header #decor .holiday-words{grid-column:2!important;font-family:Georgia,'Times New Roman',serif!important;font-style:italic!important;text-transform:none!important;letter-spacing:-.02em!important;font-weight:700!important;font-size:clamp(13px,1.7vw,31px)!important;line-height:1.03!important;white-space:normal!important;text-align:center!important;text-shadow:0 0 5px #fff4b6,0 0 11px #ffb73f,0 0 19px #ed5a91!important}
+header #decor .garage-season-left,header #decor .garage-season-right{font-size:clamp(12px,1.45vw,26px)!important;line-height:1.08!important;filter:drop-shadow(0 0 6px #ff5cad);text-align:center!important}
+header #decor .garage-season-left{grid-column:1!important}header #decor .garage-season-right{grid-column:3!important}
+body.christmas header #decor{background:radial-gradient(ellipse,rgba(16,153,89,.28),transparent 82%)!important}
+body.thanksgiving header #decor{background:radial-gradient(ellipse,rgba(255,140,39,.26),transparent 82%)!important}
+body.halloween header #decor{background:radial-gradient(ellipse,rgba(255,95,20,.24),transparent 82%)!important}
+header #clock{font-size:clamp(15px,1.45vw,27px)!important;font-weight:800!important;white-space:nowrap!important;position:relative!important;z-index:9!important}
+@media(max-width:900px){header #decor .holiday-words{font-size:clamp(12px,1.45vw,21px)!important}header #decor .garage-season-left,header #decor .garage-season-right{font-size:clamp(10px,1.2vw,18px)!important}}
+</style>
+</head><body class="classic"><div id="app"><header><div class="pinball-bulbs" aria-hidden="true"></div><div class="pinball-mechanics" aria-hidden="true"><svg viewBox="0 0 460 118" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="steel"><stop stop-color="#fff"/><stop offset=".25" stop-color="#e6f3ff"/><stop offset=".55" stop-color="#7d8aa9"/><stop offset=".8" stop-color="#26263f"/><stop offset="1" stop-color="#f4d5fc"/></radialGradient><radialGradient id="cap"><stop stop-color="#fff"/><stop offset=".24" stop-color="#fbd6ff"/><stop offset=".5" stop-color="#f32c8a"/><stop offset=".76" stop-color="#6b1e91"/><stop offset="1" stop-color="#170e3b"/></radialGradient><linearGradient id="rubber" x2="0" y2="1"><stop stop-color="#fff5ef"/><stop offset=".25" stop-color="#ff6e6b"/><stop offset=".65" stop-color="#d51d44"/><stop offset="1" stop-color="#580e37"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <g transform="translate(37 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
 <g transform="translate(423 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
 <g transform="translate(86 94) rotate(17)"><path d="M-12 -14 Q-18 -13 -19 -5 L-19 7 Q-18 15 -9 15 L110 7 Q127 5 127 -2 Q127 -10 110 -11 Z" fill="url(#rubber)" stroke="#f7e7ff" stroke-width="4"/><path d="M-8 -8 L100 -5" stroke="#fff" stroke-opacity=".85" stroke-width="3" stroke-linecap="round"/><circle r="10" fill="url(#steel)" stroke="#fff" stroke-width="2"/><circle r="3" fill="#232239"/></g>
@@ -502,7 +515,7 @@ if(d>=twoWeeksBefore(pat)&&d<=pat)return 'patrick';
 if(d>=twoWeeksBefore(ground)&&d<=ground)return 'groundhog';
 if(d>=day(y,9,22))return 'fall';if(d>=day(y,6,21))return 'summer';if(d>=day(y,3,20))return 'spring';return 'winter'}
 const themeInfo={classic:['CLASSIC SPORTS BAR','★ ✦ ★'],winter:['WINTER','❄️ ☃️ ❄️'],spring:['SPRING','🌷 🌼 🦋'],summer:['SUMMER','☀️ 🌴 ☀️'],fall:['AUTUMN','🍁 🍂 🍁'],groundhog:['GROUNDHOG DAY','🦫 🌤️ 🦫'],patrick:["ST. PATRICK’S DAY",'☘️ 🍀 ☘️'],easter:['EASTER','🐰 🥚 🌷'],memorial:['MEMORIAL DAY','🇺🇸 ★ 🇺🇸'],july4:['FOURTH OF JULY','🎆 🇺🇸 🎇'],halloween:['HALLOWEEN','🎃 👻 🕸️'],thanksgiving:['HAPPY THANKSGIVING','🍁 🦃 🍂'],christmas:['CHRISTMAS','🎄 🎁 ❄️'],newyear:['NEW YEAR','🎉 ✨ 🥂']};
-function setTheme(){let t=$('theme').value;if(t==='auto')t=themeForDate(new Date());document.body.className=t;let info=themeInfo[t]||themeInfo.classic;$('holiday').textContent='';$('decor').innerHTML='<span class="holiday-words">'+safe(info[0])+'</span><span class="holiday-icons">'+safe(info[1])+'</span>';}
+function setTheme(){let t=$('theme').value;if(t==='auto')t=themeForDate(new Date());document.body.className=t;let info=themeInfo[t]||themeInfo.classic;$('holiday').textContent='';$('decor').innerHTML='<span class="garage-season-left" aria-hidden="true">'+safe((info[1]||'').split(' ').slice(0,2).join(' '))+'</span><span class="holiday-words">'+safe(info[0].toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()))+'</span><span class="garage-season-right" aria-hidden="true">'+safe((info[1]||'').split(' ').slice(-2).join(' '))+'</span>';}
 $('theme').innerHTML='<option value="auto">Auto holiday</option>'+Object.entries(themeInfo).map(([id,v])=>'<option value="'+id+'">'+v[0]+'</option>').join('');
 $('theme').value=localStorage.getItem('theme')||'auto';$('theme').onchange=()=>{localStorage.setItem('theme',$('theme').value);setTheme()};setTheme();
 function tick(){ $('clock').textContent=new Date().toLocaleString('en-US',{timeZone:'America/New_York',weekday:'short',hour:'numeric',minute:'2-digit'})}tick();setInterval(tick,1000);
@@ -593,8 +606,11 @@ async function loadMyTeams(){
  display();
 }
 async function sports(){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());
+ const part=k=>parts.find(p=>p.type===k)?.value||'';
+ const sportsDate=part('year')+part('month')+part('day');
  let results=await Promise.allSettled(leagues.map(async([league,path,query])=>{
-  let r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard?limit=300${query}`,{cache:'no-store'});if(!r.ok)throw Error(r.status);
+  let r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard?limit=300&dates=${sportsDate}${query}`,{cache:'no-store'});if(!r.ok)throw Error(r.status);
   let j=await r.json();return (j.events||[]).map(e=>readGame(e,league,query)).filter(Boolean)
  }));
  let fresh=results.filter(x=>x.status==='fulfilled').flatMap(x=>x.value);
