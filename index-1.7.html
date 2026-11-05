@@ -585,6 +585,14 @@ main>.side>.beach-forecast-panel{display:grid!important;grid-template-columns:32
 #garage-ap-track .news-separator{color:#ffbd75;padding:0 1.7em}
 @keyframes garage-news-scroll{from{transform:translateX(0)}to{transform:translateX(-100%)}}
 @media(max-width:900px){#garage-ap-ticker{height:6.8vh}#garage-ap-label{font-size:12px}#garage-ap-track{font-size:13px}}
+</style><style id="garage-news-dedicated-row-v2">
+#app{grid-template-rows:minmax(0,10fr) minmax(0,82fr) minmax(0,8fr)!important}
+#garage-ap-ticker{position:relative!important;grid-row:3!important;left:auto!important;right:auto!important;bottom:auto!important;height:auto!important;min-height:0!important;margin:2px clamp(5px,.5vw,12px) 4px!important;z-index:10!important}
+main{grid-row:2!important;min-height:0!important;overflow:hidden!important}
+header{grid-row:1!important}
+#garage-ap-label{background:#ae2259}
+#garage-ap-track{font-size:clamp(12px,1.3vw,25px)!important}
+@media(max-width:900px){#garage-ap-ticker{height:auto!important}}
 </style></head><body class="classic"><div id="app"><header><div class="pinball-bulbs" aria-hidden="true"></div><div class="pinball-mechanics" aria-hidden="true"><svg viewBox="0 0 460 118" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="steel"><stop stop-color="#fff"/><stop offset=".25" stop-color="#e6f3ff"/><stop offset=".55" stop-color="#7d8aa9"/><stop offset=".8" stop-color="#26263f"/><stop offset="1" stop-color="#f4d5fc"/></radialGradient><radialGradient id="cap"><stop stop-color="#fff"/><stop offset=".24" stop-color="#fbd6ff"/><stop offset=".5" stop-color="#f32c8a"/><stop offset=".76" stop-color="#6b1e91"/><stop offset="1" stop-color="#170e3b"/></radialGradient><linearGradient id="rubber" x2="0" y2="1"><stop stop-color="#fff5ef"/><stop offset=".25" stop-color="#ff6e6b"/><stop offset=".65" stop-color="#d51d44"/><stop offset="1" stop-color="#580e37"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <g transform="translate(37 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
 <g transform="translate(423 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
@@ -944,47 +952,58 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBeach()
  lineTimer=setInterval(()=>{if(dailyLineOpen&&lineAuto)turn(1)},15000);
  updateLeagueButtons();
 })();
-</script><script id="garage-ap-headlines-v1">
+</script><script id="garage-ap-headlines-v2">
 (function(){
  const track=document.getElementById('garage-ap-track');
- const feed='https://flipboard.com/@associatedpress/top-stories-u7govdf1z.rss';
- const alt='https://news.google.com/rss/search?q=when%3A24h%20site%3Aapnews.com&hl=en-US&gl=US&ceid=US%3Aen';
+ const sources=[
+  {name:'AP NEWS',feed:'https://flipboard.com/@associatedpress/top-stories-u7govdf1z.rss',fallback:'https://news.google.com/rss/search?q=when%3A24h%20site%3Aapnews.com&hl=en-US&gl=US&ceid=US%3Aen'},
+  {name:'ENTERTAINMENT',feed:'https://variety.com/feed/',fallback:'https://news.google.com/rss/search?q=when%3A24h%20site%3Avariety.com&hl=en-US&gl=US&ceid=US%3Aen'}
+ ];
  const maxAge=48*60*60*1000;
- function show(message){track.textContent=message;track.style.animation='none';void track.offsetWidth;track.style.animation='garage-news-scroll 85s linear infinite'}
- function render(items){
-  const valid=items.filter(x=>x.title&&x.title.length>15&&(!x.date||Date.now()-new Date(x.date).getTime()<maxAge)).slice(0,12);
-  if(!valid.length)throw Error('No recent headlines');
-  track.replaceChildren();
-  valid.forEach((item,i)=>{
-   if(i){const sep=document.createElement('span');sep.className='news-separator';sep.textContent='◆';track.appendChild(sep)}
-   const span=document.createElement('span');span.textContent=item.title.replace(/\s+-\s+(AP News|Associated Press)$/i,'');track.appendChild(span);
-  });
-  track.style.animation='none';void track.offsetWidth;track.style.animation='garage-news-scroll '+Math.max(75,valid.length*13)+'s linear infinite';
+ function normalize(items,source){
+  return items.filter(x=>x.title&&x.title.length>15&&(!x.date||Date.now()-new Date(x.date).getTime()<maxAge)).slice(0,7).map(x=>({...x,source}));
  }
  function parseXml(raw){
   const doc=new DOMParser().parseFromString(raw,'application/xml');
-  if(doc.querySelector('parsererror'))throw Error('Invalid feed XML');
+  if(doc.querySelector('parsererror'))throw Error('Invalid RSS');
   return [...doc.querySelectorAll('item')].map(n=>({title:n.querySelector('title')?.textContent||'',date:n.querySelector('pubDate')?.textContent||''}));
  }
- async function fetchJson(url){
-  const response=await fetch(url,{cache:'no-store'});
-  if(!response.ok)throw Error('Feed request failed');
-  return response.json();
+ async function retrieve(source){
+  try{
+   const url='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(source.feed);
+   const response=await fetch(url,{cache:'no-store'});
+   if(!response.ok)throw Error('Primary unavailable');
+   const payload=await response.json();
+   if(payload.status!=='ok'||!payload.items?.length)throw Error('Empty primary');
+   const items=normalize(payload.items.map(x=>({title:x.title,date:x.pubDate})),source.name);
+   if(items.length)return items;
+  }catch(e){console.warn(source.name+' primary:',e)}
+  try{
+   const url='https://api.allorigins.win/raw?url='+encodeURIComponent(source.fallback);
+   const response=await fetch(url,{cache:'no-store'});
+   if(!response.ok)throw Error('Fallback unavailable');
+   return normalize(parseXml(await response.text()),source.name);
+  }catch(e){console.warn(source.name+' fallback:',e);return []}
+ }
+ function render(items){
+  track.replaceChildren();
+  if(!items.length){
+   track.textContent='News headlines temporarily unavailable • Check back soon';
+  }else{
+   items.forEach((item,i)=>{
+    if(i){let sep=document.createElement('span');sep.className='news-separator';sep.textContent='◆';track.appendChild(sep)}
+    const tag=document.createElement('strong');tag.textContent=item.source+'  ';tag.style.color=item.source==='ENTERTAINMENT'?'#ffd18e':'#ff92c4';track.appendChild(tag);
+    const title=document.createElement('span');title.textContent=item.title.replace(/\s+-\s+(AP News|Associated Press|Variety)$/i,'');track.appendChild(title);
+   });
+  }
+  track.style.animation='none';void track.offsetWidth;
+  track.style.animation='garage-news-scroll '+Math.max(85,items.length*14)+'s linear infinite';
  }
  async function update(){
-  try{
-   const endpoint='https://api.rss2json.com/v1/api.json?rss_url='+encodeURIComponent(feed);
-   let data=await fetchJson(endpoint);
-   if(data.status!=='ok'||!data.items?.length)throw Error('Feed empty');
-   render(data.items.map(x=>({title:x.title,date:x.pubDate})));
-   return;
-  }catch(e){console.warn('AP Flipboard feed unavailable:',e)}
-  try{
-   const proxy='https://api.allorigins.win/raw?url='+encodeURIComponent(alt);
-   const response=await fetch(proxy,{cache:'no-store'});
-   if(!response.ok)throw Error('Alternate news feed unavailable');
-   render(parseXml(await response.text()));
-  }catch(e){console.warn('AP alternate feed unavailable:',e);show('AP headlines temporarily unavailable  •  Visit apnews.com for the latest reporting')}
+  const [ap,ent]=await Promise.all(sources.map(retrieve));
+  const combined=[];
+  for(let i=0;i<Math.max(ap.length,ent.length);i++){if(ap[i])combined.push(ap[i]);if(ent[i])combined.push(ent[i])}
+  render(combined);
  }
  update();setInterval(update,20*60*1000);
 })();
