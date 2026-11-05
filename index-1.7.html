@@ -676,11 +676,12 @@ function readGame(e,league,query){
  let away=a.team?.shortDisplayName||a.team?.displayName||'TBD',home=h.team?.shortDisplayName||h.team?.displayName||'TBD',st=e.status?.type||{},ar=rank(a),hr=rank(h);
  let od=c.odds?.[0],spread=od?.details||od?.spread,ou=od?.overUnder;
  let odds=spread!=null||ou!=null?`LINE: ${spread??'—'}  •  O/U: ${ou??'—'}` :'';
- return {id:String(e.id),league,away,home,awayLogo:a.team?.logo||a.team?.logos?.[0]?.href||teamLogo(league,a.team),homeLogo:h.team?.logo||h.team?.logos?.[0]?.href||teamLogo(league,h.team),as:a.score??'',hs:h.score??'',ar,hr,odds,status:st.shortDetail||'Scheduled',live:st.state==='in',final:st.state==='post',date:Date.parse(e.date),fav:/Ohio State|Buckeyes|Cleveland Browns|Cleveland Cavaliers|Cleveland Guardians|Columbus Blue Jackets/i.test(away+' '+home),bigTen:bigTen(a)||bigTen(h),top25:!!(ar||hr),fromTop25:false,fromBigTen:false};
+ return {id:String(e.id),league,away,home,awayLogo:a.team?.logo||a.team?.logos?.[0]?.href||teamLogo(league,a.team),homeLogo:h.team?.logo||h.team?.logos?.[0]?.href||teamLogo(league,h.team),as:a.score??'',hs:h.score??'',ar,hr,odds,status:st.shortDetail||'Scheduled',live:st.state==='in',final:st.state==='post',date:Date.parse(e.date),fav:/Ohio State|Buckeyes|Cleveland Browns|Cincinnati Bengals|Cleveland Cavaliers|Cleveland Guardians|Columbus Blue Jackets/i.test(away+' '+home),bigTen:bigTen(a)||bigTen(h),top25:!!(ar||hr),fromTop25:false,fromBigTen:false};
 }
 
 const favoriteTeams=[
  {league:'NFL',path:'football/nfl',id:'5',name:'Cleveland Browns',logo:'https://a.espncdn.com/i/teamlogos/nfl/500/cle.png'},
+ {league:'NFL',path:'football/nfl',id:'4',name:'Cincinnati Bengals',logo:'https://a.espncdn.com/i/teamlogos/nfl/500/cin.png'},
  {league:'NCAA FOOTBALL',path:'football/college-football',id:'194',name:'Ohio State Football',logo:'https://a.espncdn.com/i/teamlogos/ncaa/500/194.png'},
  {league:'NCAA MEN',path:'basketball/mens-college-basketball',id:'194',name:'Ohio State Basketball',logo:'https://a.espncdn.com/i/teamlogos/ncaa/500/194.png'},
  {league:'MLB',path:'baseball/mlb',id:'17',name:'Cincinnati Reds',logo:'https://a.espncdn.com/i/teamlogos/mlb/500/cin.png'},
