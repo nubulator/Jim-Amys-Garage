@@ -1237,4 +1237,22 @@ header .pinball-bulbs{background-size:clamp(13px,1.4vw,24px) clamp(13px,1.4vw,24
 #garage-fun-standalone .garage-fun-question{font-size:clamp(25px,2.5vw,48px)!important;line-height:1.13!important}
 #garage-fun-standalone .garage-fun-answer{font-size:clamp(20px,1.85vw,36px)!important;line-height:1.13!important}
 #garage-fun-standalone .garage-fun-category{font-size:clamp(15px,1.3vw,26px)!important}
-</style></body></html>
+</style><style id="garage-focus-fix-v7">
+header{grid-template-columns:minmax(0,32%) minmax(0,36%) minmax(0,32%)!important}
+header h1{padding-left:3px!important;justify-content:flex-start!important;min-width:0!important}
+header h1 .neontitle{font-size:clamp(21px,2.5vw,46px)!important;letter-spacing:-.025em!important}
+header #decor{padding:0 12px!important;box-sizing:border-box!important;font-size:clamp(13px,1.4vw,26px)!important}
+header .pinball-bulbs{z-index:0!important;height:clamp(4px,.65vh,10px)!important;background:radial-gradient(circle at center,#fff 0 .5px,#ffab18 .8px 2.5px,transparent 3px) 0 0/21px 100% repeat-x!important;filter:drop-shadow(0 0 2px #ff8614)!important;pointer-events:none!important}
+#garage-fun-standalone .garage-fun-question{font-size:clamp(26px,2.7vw,52px)!important;line-height:1.12!important}
+#garage-fun-standalone .garage-fun-answer{font-size:clamp(21px,2.1vw,40px)!important;line-height:1.13!important}
+#garage-fun-standalone .garage-fun-category{font-size:clamp(17px,1.5vw,29px)!important}
+#garage-theme-page{position:fixed;inset:0;background:linear-gradient(140deg,#06102a,#12274c 60%,#170b32);z-index:2147483647;display:none;flex-direction:column;align-items:center;padding:clamp(20px,4vh,70px);box-sizing:border-box;overflow-y:auto;color:#fff;font-family:Arial,sans-serif}
+#garage-theme-page.open{display:flex!important}
+#garage-theme-page h2{font-size:clamp(28px,3vw,58px);margin:10px 0 4px;text-align:center;color:#ffd65c}
+#garage-theme-page p{font-size:clamp(15px,1.2vw,24px);margin:0 0 15px}
+#garage-theme-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(8px,1vw,18px);width:min(850px,92vw);margin:0 auto}
+#garage-theme-options button{background:#13519b;color:#fff;border:3px solid #54b9ff;border-radius:12px;padding:clamp(12px,1.5vw,26px);font-size:clamp(16px,1.5vw,29px);font-weight:900;text-align:center;cursor:pointer}
+#garage-theme-options button.selected{background:#ffd348;color:#132445;border-color:#fff;box-shadow:0 0 0 4px #f90}
+#garage-theme-options button:focus-visible,#garage-theme-back:focus-visible{outline:5px solid #fff;outline-offset:3px}
+#garage-theme-back{margin:18px auto 0;padding:12px 35px;background:#7c2444;border:2px solid #fff;border-radius:9px;color:#fff;font-size:clamp(16px,1.4vw,27px);font-weight:800}
+</style><script id="garage-theme-page-v7">(function(){function init(){const select=document.getElementById('theme'),trigger=document.getElementById('holiday-remote-trigger');if(!select||!trigger)return;let page=document.createElement('div');page.id='garage-theme-page';page.setAttribute('role','dialog');page.setAttribute('aria-modal','true');page.innerHTML='<h2>CHOOSE YOUR THEME</h2><p>Jim & Amy’s Garage</p><div id="garage-theme-options"></div><button id="garage-theme-back" type="button">BACK TO GARAGE</button>';document.body.appendChild(page);let options=page.querySelector('#garage-theme-options'),back=page.querySelector('#garage-theme-back');for(const opt of select.options){let btn=document.createElement('button');btn.type='button';btn.textContent=opt.textContent;btn.dataset.value=opt.value;btn.addEventListener('click',()=>{select.value=opt.value;select.dispatchEvent(new Event('change',{bubbles:true}));close()});options.appendChild(btn)}function open(){document.querySelector('.holiday-menu')?.classList.remove('open');trigger.setAttribute('aria-expanded','false');for(const btn of options.children)btn.classList.toggle('selected',btn.dataset.value===select.value);page.classList.add('open');(options.querySelector('.selected')||options.firstElementChild)?.focus()}function close(){page.classList.remove('open');trigger.focus()}back.addEventListener('click',close);document.addEventListener('keydown',e=>{if(page.classList.contains('open')&&(e.key==='Escape'||e.key==='Backspace')){e.preventDefault();e.stopImmediatePropagation();close()}},true);trigger.addEventListener('click',e=>{e.preventDefault();e.stopImmediatePropagation();open()},true)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script></body></html>
