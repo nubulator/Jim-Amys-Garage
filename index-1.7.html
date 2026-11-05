@@ -662,11 +662,14 @@ function safe(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&l
 function display(){
  if(!games.length&&!myTeams.length){$('games').innerHTML='<div class="game">No qualifying games available right now. Retrying automatically.</div>';$('ticker').textContent='Jim & Amy’s Garage • NCAA Football: Top 25 + Big Ten • Men’s Hoops: Top 25 + Ohio State • NFL • NBA • MLB • NHL';return}
  let n=4,filtered=leagueFilter==='ALL'?games:games.filter(g=>g.league===leagueFilter);
- let pages=leagueFilter==='ALL'?1+Math.ceil(filtered.length/n):Math.max(1,Math.ceil(filtered.length/n));
+ let pages=leagueFilter==='ALL'?2+Math.ceil(filtered.length/n):Math.max(1,Math.ceil(filtered.length/n));
  page=((page%pages)+pages)%pages;
- let current=leagueFilter==='ALL'&&page===0?myTeams:filtered.slice((leagueFilter==='ALL'?page-1:page)*n,(leagueFilter==='ALL'?page:page+1)*n);
- $('games').innerHTML=current.map(g=>`<div class="game ${g.fav?'favorite':''}" ${leagueFilter==='ALL'&&page===0?`style="--team-watermark:url('${safe(favoriteTeams.find(t=>t.name===g.league)?.logo||g.awayLogo)}')"`:``}><div class="meta"><span>${safe(g.league)} ${g.live?'● LIVE':''}</span><span>${safe(g.status)}</span></div><div class="teams"><span style="min-width:0"><span class="teamline"><img src="${safe(g.awayLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.ar?`<span class="rank">#${g.ar}</span>`:''}${safe(g.away)}</span></span><span class="teamline"><img src="${safe(g.homeLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.hr?`<span class="rank">#${g.hr}</span>`:''}${safe(g.home)}</span></span></span><span class="score">${!g.live&&!g.final?'VS':safe(g.as)+'<br>'+safe(g.hs)}</span></div></div>`).join('');
- $('updated').textContent=leagueFilter==='ALL'&&page===0?'MY TEAMS • next games':`${filtered.length} ${leagueFilter==='ALL'?'games':leagueFilter+' games'} • page ${page+1}/${pages}`;
+ // Two My Teams pages: Browns + Buckeyes football first, other favorites second.
+ const priorityTeams=myTeams.filter(g=>g.league==='Cleveland Browns'||g.league==='Ohio State Football');
+ const otherTeams=myTeams.filter(g=>g.league!=='Cleveland Browns'&&g.league!=='Ohio State Football');
+ let current=leagueFilter==='ALL'&&page<2?(page===0?priorityTeams:otherTeams):filtered.slice((leagueFilter==='ALL'?page-2:page)*n,(leagueFilter==='ALL'?page-1:page+1)*n);
+ $('games').innerHTML=current.map(g=>`<div class="game ${g.fav?'favorite':''}" ${leagueFilter==='ALL'&&page<2?`style="--team-watermark:url('${safe(favoriteTeams.find(t=>t.name===g.league)?.logo||g.awayLogo)}')"`:``}><div class="meta"><span>${safe(g.league)} ${g.live?'● LIVE':''}</span><span>${safe(g.status)}</span></div><div class="teams"><span style="min-width:0"><span class="teamline"><img src="${safe(g.awayLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.ar?`<span class="rank">#${g.ar}</span>`:''}${safe(g.away)}</span></span><span class="teamline"><img src="${safe(g.homeLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.hr?`<span class="rank">#${g.hr}</span>`:''}${safe(g.home)}</span></span></span><span class="score">${!g.live&&!g.final?'VS':safe(g.as)+'<br>'+safe(g.hs)}</span></div></div>`).join('');
+ $('updated').textContent=leagueFilter==='ALL'&&page<2?('MY TEAMS • '+(page===0?'Browns & Buckeyes':'other favorites')+' • '+(page+1)+'/2'):`${filtered.length} ${leagueFilter==='ALL'?'games':leagueFilter+' games'} • page ${page+1}/${pages}`;
  if(typeof updateLeagueButtons==='function')updateLeagueButtons();if(dailyLineOpen&&typeof renderDailyLine==='function')renderDailyLine();
  $('ticker').textContent=games.concat(myTeams.filter(g=>g.id)).map(g=>`${g.league}: ${g.away} ${!g.live&&!g.final?'VS':g.as+' —'} ${g.home} ${g.live||g.final?g.hs:''} (${g.status})${g.odds?' • '+g.odds:''}`).join('     ✦     ')
 }
@@ -1088,11 +1091,18 @@ header #clock{top:calc(50% + 3px)!important}
 header .header-right{top:calc(50% + 3px)!important}
 .garage-fun-content{min-height:0!important;overflow:hidden!important;display:flex!important;flex-direction:column!important;justify-content:center!important;gap:clamp(2px,.4vh,6px)!important;padding:3px 9px clamp(29px,3.2vh,46px)!important}
 .garage-fun-question,.garage-fun-answer{max-width:100%!important;min-width:0!important;overflow-wrap:break-word!important;word-break:normal!important;white-space:normal!important;line-height:1.12!important}
-</style><script id="garage-fun-auto-fit-v3">(function(){
-function fit(){const box=document.getElementById('garage-fun-content');if(!box)return;const q=document.getElementById('garage-fun-question'),a=document.getElementById('garage-fun-answer');if(!q||!a)return;
-q.style.setProperty('font-size','clamp(14px,1.45vw,28px)','important');a.style.setProperty('font-size','clamp(12px,1.24vw,24px)','important');
-let qSize=parseFloat(getComputedStyle(q).fontSize),aSize=parseFloat(getComputedStyle(a).fontSize);
-for(let i=0;i<16&&box.scrollHeight>box.clientHeight+2;i++){qSize=Math.max(11,qSize-1);aSize=Math.max(10,aSize-.85);q.style.setProperty('font-size',qSize+'px','important');a.style.setProperty('font-size',aSize+'px','important');}
+</style><script id="garage-fun-auto-fit-v4">(function(){
+function fit(){
+ const box=document.getElementById('garage-fun-content'),q=document.getElementById('garage-fun-question'),a=document.getElementById('garage-fun-answer');
+ if(!box||!q||!a)return;
+ // Override old inline-important small sizes; only reduce when content actually overflows.
+ q.style.setProperty('font-size','clamp(24px,2.45vw,47px)','important');
+ a.style.setProperty('font-size','clamp(23px,2.35vw,45px)','important');
+ let qs=parseFloat(getComputedStyle(q).fontSize),as=parseFloat(getComputedStyle(a).fontSize);
+ for(let i=0;i<24&&box.scrollHeight>box.clientHeight+2;i++){
+  qs=Math.max(16,qs-1);as=Math.max(16,as-1);
+  q.style.setProperty('font-size',qs+'px','important');a.style.setProperty('font-size',as+'px','important');
+ }
 }
 function init(){const box=document.getElementById('garage-fun-content');if(!box)return;new MutationObserver(fit).observe(box,{childList:true,characterData:true,subtree:true});window.addEventListener('resize',fit);fit();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
@@ -1401,4 +1411,9 @@ main>.side>.panel:first-child #garage-weather-art .wx-graphic{font-size:clamp(20
 #garage-fun-standalone .garage-fun-answer{font-size:clamp(21px,2.06vw,40px)!important;line-height:1.16!important;max-width:96%!important;margin-inline:auto!important}
 #garage-weather-standalone #garage-weather-art,main>.side>.panel:first-child #garage-weather-art{width:clamp(23px,2.45vw,37px)!important;height:clamp(23px,2.45vw,37px)!important;right:clamp(10px,1.25vw,22px)!important;overflow:hidden!important}
 #garage-weather-standalone #garage-weather-art .wx-graphic,main>.side>.panel:first-child #garage-weather-art .wx-graphic{font-size:clamp(17px,1.75vw,28px)!important;line-height:1!important}
+</style><style id="garage-icon-and-questions-v36">
+/* Weather glyph safely inset from the border; emoji's intrinsic drawing exceeds its font box. */
+#garage-weather-art,main>.side>.panel:first-child #garage-weather-art{right:clamp(13px,1.6vw,27px)!important;width:clamp(27px,2.9vw,44px)!important;height:clamp(27px,2.9vw,44px)!important;overflow:visible!important;align-items:center!important;justify-content:center!important}
+#garage-weather-art .wx-graphic,main>.side>.panel:first-child #garage-weather-art .wx-graphic{font-size:clamp(16px,1.55vw,26px)!important;line-height:1.15!important;transform:scale(.85)!important;transform-origin:center!important}
+#garage-fun-standalone .garage-fun-answer{font-weight:800!important;color:#fff!important}
 </style></body></html>
