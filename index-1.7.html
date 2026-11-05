@@ -1247,4 +1247,14 @@ header #dashboard-refresh{font-size:clamp(7px,.55vw,11px)!important;padding:1px 
 #garage-fun-standalone .garage-fun-category{font-size:clamp(19px,1.85vw,36px)!important}
 #garage-score-connection{display:inline-flex;align-items:center;gap:4px;margin-left:12px;font-size:clamp(8px,.65vw,12px);font-weight:700;color:#5ef38b;vertical-align:middle;letter-spacing:0}
 #garage-score-connection:before{content:"";width:7px;height:7px;border-radius:50%;background:#48e577;box-shadow:0 0 5px #48e577}
-</style><script id="garage-scores-status-v9">(function(){function init(){let h=document.querySelector('.board .heading');if(!h||document.getElementById('garage-score-connection'))return;let el=document.createElement('span');el.id='garage-score-connection';el.textContent='CONNECTED';h.insertBefore(el,h.querySelector('#updated'));function update(){let status=document.getElementById('status');let connected=status&&/connected|live|updated/i.test(status.textContent)&&!/disconnected|not connected/i.test(status.textContent);el.style.color=connected?'#5ef38b':'#f7bd66';el.textContent=connected?'CONNECTED':'CHECKING';}update();setInterval(update,10000)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script></body></html>
+</style><script id="garage-scores-status-v9">(function(){function init(){let h=document.querySelector('.board .heading');if(!h||document.getElementById('garage-score-connection'))return;let el=document.createElement('span');el.id='garage-score-connection';el.textContent='CONNECTED';h.insertBefore(el,h.querySelector('#updated'));function update(){let status=document.getElementById('status');let connected=status&&/connected|live|updated/i.test(status.textContent)&&!/disconnected|not connected/i.test(status.textContent);el.style.color=connected?'#5ef38b':'#f7bd66';el.textContent=connected?'CONNECTED':'CHECKING';}update();setInterval(update,10000)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script><style id="garage-v10-readable">
+/* Small TV-legibility refinements, scoped to the garage dashboard */
+header #clock{font-size:clamp(15px,1.36vw,26px)!important;line-height:1.05!important;min-width:clamp(59px,6.1vw,118px)!important}
+#garage-fun-standalone .garage-fun-question{font-size:clamp(33px,3.75vw,69px)!important;line-height:1.1!important}
+#garage-fun-standalone .garage-fun-answer{font-size:clamp(27px,2.85vw,53px)!important;line-height:1.1!important}
+#garage-fun-standalone .garage-fun-category{font-size:clamp(20px,2.05vw,39px)!important}
+#garage-forecast-standalone #forecast{font-size:clamp(13px,1.16vw,22px)!important;line-height:1.15!important;gap:2px 7px!important}
+#garage-forecast-standalone .garage-forecast-day small{font-size:.9em!important}
+#garage-weather-standalone{font-size:1.09em!important}
+#garage-weather-standalone h2,#garage-forecast-standalone h2{font-size:clamp(12px,1.05vw,20px)!important}
+</style></body></html>
