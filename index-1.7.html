@@ -1302,4 +1302,23 @@ radial-gradient(ellipse at center,#204c68,#142b4b 80%)!important}
 #garage-fun-standalone .garage-fun::after{content:none!important;display:none!important}
 #garage-fun-standalone .garage-fun-content{background:transparent!important;position:relative!important;z-index:2!important;text-shadow:0 2px 5px #000,0 0 12px #000!important}
 #garage-fun-standalone #garage-fun-next{z-index:5!important}
-</style></body></html>
+</style><style id="garage-kiss-photo-and-season-colors-v22">
+/* Original 1979 Bally KISS playfield photograph (Pinside gallery); preserve trivia legibility. */
+#garage-fun-standalone .garage-fun::before{background-image:linear-gradient(90deg,rgba(3,8,19,.75),rgba(3,8,19,.46),rgba(3,8,19,.75)),url("https://imgproxy.pinside.com/GpgBVtdobdcWKaj50SrXlEuNo_g4B3rVnm80G1zHioI/rs%3Afit%3A2048%3A2048/enc/a0gI9yeifyYXeGuMDMHLdYWJMfigFfPoJANgXm30vsRsN76XRQ0m2ds1WcR32wWz7wulvh2ToBy7xvQ1Za_bEFYMe3ekBX9vP4Zr8lKNmpegwLY4sl5jCuc7QsPbqC6_.jpg")!important;background-position:center 54%!important;opacity:.72!important}
+#garage-weather-standalone{font-size:1.45em!important;line-height:1.16!important}
+#garage-weather-standalone h2{font-size:clamp(15px,1.35vw,26px)!important}
+header #decor{overflow:visible!important;transform:translateX(clamp(9px,1.1vw,20px))!important;padding:0 3px!important}
+header #decor .holiday-words{overflow:visible!important;max-width:none!important;white-space:nowrap!important;line-height:1.28!important;padding:3px 5px!important}
+header #decor .garage-season-left,header #decor .garage-season-right{flex-shrink:0!important}
+header #decor[data-garage-season="thanksgiving"] .holiday-words{color:#ff9c34!important;text-shadow:0 0 5px #b84a00,0 0 12px #d86a00,0 0 20px #ff9e3e!important;font-size:clamp(18px,2.24vw,42px)!important}
+header #decor[data-garage-season="christmas"] .holiday-words{color:#ff4d52!important;text-shadow:0 0 5px #a60000,0 0 12px #e22,0 0 19px #27b95c!important}
+header #decor[data-garage-season="fall"] .holiday-words{color:#ffa53b!important;text-shadow:0 0 5px #a74700,0 0 14px #ed7800!important}
+header #decor[data-garage-season="winter"] .holiday-words{color:#c5eeff!important;text-shadow:0 0 6px #59a9ff,0 0 16px #2e77dd!important}
+header #decor[data-garage-season="spring"] .holiday-words{color:#aaf18b!important;text-shadow:0 0 6px #41983b,0 0 15px #63c953!important}
+header #decor[data-garage-season="summer"] .holiday-words{color:#ffe35b!important;text-shadow:0 0 6px #f7901d,0 0 15px #ffc32a!important}
+header #decor[data-garage-season="halloween"] .holiday-words{color:#ff8d28!important;text-shadow:0 0 6px #7a24ad,0 0 17px #b331e0!important}
+header #decor[data-garage-season="easter"] .holiday-words{color:#ffc0e9!important;text-shadow:0 0 6px #9d62ef,0 0 16px #c26edc!important}
+header #decor[data-garage-season="july"] .holiday-words,header #decor[data-garage-season="memorial"] .holiday-words{color:#ff6767!important;text-shadow:0 0 6px #fff,0 0 15px #3479f5!important}
+header #decor[data-garage-season="patrick"] .holiday-words{color:#75ef89!important;text-shadow:0 0 6px #177e36,0 0 15px #36bd4d!important}
+</style>
+<script id="garage-season-color-controller-v22">(function(){function run(){var el=document.getElementById('decor');if(!el)return;function sync(){var t=(el.querySelector('.holiday-words')?.textContent||'').toLowerCase();var keys=['thanksgiving','christmas','halloween','easter','winter','spring','summer','fall','patrick','memorial','july'];el.dataset.garageSeason=keys.find(k=>t.includes(k))||'default';}sync();new MutationObserver(sync).observe(el,{childList:true,subtree:true,characterData:true});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();})();</script></body></html>
