@@ -898,46 +898,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBeach()
  function paint(){let theme=document.body.className.trim().split(/\s+/)[0];let d=decals[theme]||decals.classic;document.querySelectorAll('.season-decal').forEach((el,i)=>el.textContent=d[i]);}
  document.addEventListener('DOMContentLoaded',()=>{let app=document.getElementById('app');['left','right'].forEach(side=>{let e=document.createElement('span');e.className='season-decal '+side;e.setAttribute('aria-hidden','true');app.appendChild(e)});paint();new MutationObserver(paint).observe(document.body,{attributes:true,attributeFilter:['class']});});
 })();
-</script><script id="garage-fun-rotation">
-(function(){
- const jokes=[['Why did the bicycle fall over?','It was two-tired.'],['Why did the scarecrow win an award?','He was outstanding in his field.'],['Why did the golfer bring two pairs of pants?','In case he got a hole in one.'],['What do you call cheese that is not yours?','Nacho cheese.'],['Why did the tomato blush?','It saw the salad dressing.']];
- const trivia=[['Which band released the album 1984?','Van Halen.'],['What is the only U.S. state named after a president?','Washington.'],['In darts, what is the highest score with three darts?','180.'],['Which planet has the most prominent ring system?','Saturn.'],['What is the largest ocean on Earth?','The Pacific Ocean.']];
- const pickleball=[['What is the kitchen in pickleball?','The non-volley zone, extending 7 feet from each side of the net.'],['What does a dink do?','It is a soft shot that lands in the opponent’s kitchen.'],['What is a third-shot drop?','A soft shot after the return, intended to land in the kitchen and help the serving team move forward.'],['What does ATP mean?','Around the Post: a shot hit outside the net post and into the opponent’s court.'],['What is a golden pickle?','Winning a game without allowing your opponents to score a point.'],['Can you volley while standing in the kitchen?','No. A volley must be hit from outside the non-volley zone.'],['What is an erne?','A volley hit from beside the kitchen after moving around or jumping over its corner.'],['Why is the score called with three numbers in doubles?','The numbers identify the serving team’s score, receiving team’s score, and server number.']];
- const words=[['FLUMMOX','To confuse or completely bewilder.'],['KERFUFFLE','A commotion or fuss.'],['BUMBERSHOOT','An old-fashioned word for an umbrella.'],['GOBSMACKED','Utterly astonished.'],['SKEDADDLE','To leave quickly.']];
- const history={'11-05':['1605','The Gunpowder Plot was discovered in London.'],'07-20':['1969','Apollo 11 astronauts first walked on the Moon.'],'12-17':['1903','The Wright brothers made their first powered flights.'],'08-28':['1963','Martin Luther King Jr. delivered his “I Have a Dream” speech.'],'04-15':['1912','The Titanic sank in the North Atlantic.'],'10-29':['1969','The first ARPANET message was sent.']};
- let index=0,lastDay='',todayHistory=null;
- const dayKey=()=>{const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',month:'2-digit',day:'2-digit'}).formatToParts(new Date());return parts.find(p=>p.type==='month').value+'-'+parts.find(p=>p.type==='day').value};
- const dayNumber=()=>Math.floor(Date.now()/86400000);
- function render(){let day=dayNumber(),kind=index%7,entry,category;
- if(kind===0){category='GUESS THE CLASSIC ROCK LYRIC';entry=['Which song includes the lyric: “All that glitters is gold”?','Answer revealed on slide 7 of 7.']}\n if(kind===6){category='CLASSIC ROCK LYRIC — ANSWER';entry=['Stairway to Heaven','Led Zeppelin']}\n if(kind===1){category='DAD JOKE';entry=jokes[day%jokes.length]}
- if(kind===2){category='BAR TRIVIA';entry=trivia[day%trivia.length]}
- if(kind===3){category='WORD OF THE DAY';entry=words[day%words.length]}
- if(kind===5){category='PICKLEBALL CORNER';entry=pickleball[day%pickleball.length]}
- if(kind===4){let h=todayHistory||history[dayKey()];category='THIS DAY IN HISTORY';entry=h?['On this date in '+h[0]+'…',h[1]]:['ON THIS DATE','No verified historical event available for today.']}
- document.getElementById('garage-fun-category').textContent=category;
- document.getElementById('garage-fun-question').textContent=entry[0];
- document.getElementById('garage-fun-answer').textContent=entry[1];
- document.getElementById('garage-fun-count').textContent=(kind+1)+' / 7';}
- async function refreshHistory(){
-  const key=dayKey(),parts=key.split('-');
-  try{
-   const url='https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/'+parts[0]+'/'+parts[1];
-   const response=await fetch(url,{cache:'no-store',headers:{'Accept':'application/json'}});
-   if(!response.ok)throw Error('History service unavailable');
-   const payload=await response.json();
-   const events=(payload.events||[]).filter(e=>e.year&&e.text&&e.text.length>=35&&e.text.length<=220);
-   const selected=events.find(e=>e.year>=1700&&e.year<=1999)||events[0];
-   if(selected)todayHistory=[String(selected.year),selected.text.replace(/<[^>]*>/g,'')];
-  }catch(err){console.warn('Date-specific history unavailable',err)}
-  render();
- }
- setInterval(()=>{if(lastDay!==dayKey()){lastDay=dayKey();todayHistory=null;refreshHistory()}},60000);
- refreshHistory();
- function next(){index=(index+1)%7;render()}
- document.getElementById('garage-fun-next').addEventListener('click',next);
- render();setInterval(next,25000);
-})();
-</script><script id="v3819-interactions">
+</script><script id="garage-fun-rotation">(function(){function init(){const category=document.getElementById('garage-fun-category'),question=document.getElementById('garage-fun-question'),answer=document.getElementById('garage-fun-answer'),count=document.getElementById('garage-fun-count'),next=document.getElementById('garage-fun-next');if(!category||!question||!answer||!count||!next)return;let index=0;const slides=[['GUESS THE CLASSIC ROCK LYRIC','Which song includes the lyric: “All that glitters is gold”?','Answer on slide 7 of 7'],['DAD JOKE','Why did the bicycle fall over?','Because it was two-tired.'],['BAR TRIVIA','Which band released the album 1984?','Van Halen'],['WORD OF THE DAY','FLUMMOX','To confuse or completely bewilder'],['THIS DAY IN HISTORY','On November 5, 1605…','The Gunpowder Plot was discovered in London'],['PICKLEBALL CORNER','What is the kitchen in pickleball?','The non-volley zone'],['CLASSIC ROCK LYRIC — ANSWER','Stairway to Heaven','Led Zeppelin']];function render(){let x=slides[index];category.textContent=x[0];question.textContent=x[1];answer.textContent=x[2];count.textContent=(index+1)+' / '+slides.length}function advance(){index=(index+1)%slides.length;render()}next.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();advance()});render();setInterval(advance,25000)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script><script id="v3819-interactions">
 (function(){
  const names={'NFL':'NFL','NCAA FOOTBALL':'NCAA FB','NCAA MEN':'NCAA BB','NBA':'NBA','NHL':'NHL','MLB':'MLB'};
  const filterBar=document.getElementById('league-filters');
@@ -1274,4 +1235,16 @@ header #clock{min-width:clamp(52px,5.3vw,102px)!important;font-size:clamp(11px,.
 #garage-theme-options button[data-theme-kind="halloween"]{background-image:linear-gradient(110deg,#43205c,#c86b21)!important}
 #garage-theme-options button[data-theme-kind="christmas"]{background-image:linear-gradient(110deg,#15583b,#a52435)!important}
 #garage-theme-options button[data-theme-kind="thanksgiving"]{background-image:linear-gradient(110deg,#89451d,#d89832)!important}
-</style><script id="garage-theme-examples-v8">(function(){function init(){let root=document.getElementById('garage-theme-options');if(!root)return;let examples=[['auto','✦'],['sports','★'],['winter','❄'],['spring','✿'],['summer','☀'],['fall','🍂'],['groundhog','☀'],['patrick','☘'],['easter','🐣'],['memorial','★'],['july','★'],['halloween','🎃'],['thanksgiving','🍁'],['christmas','🎄']];let buttons=[...root.querySelectorAll('button')];buttons.forEach((b,i)=>{let label=b.textContent.toLowerCase(),kind=label.includes('christmas')?'christmas':label.includes('thanksgiving')?'thanksgiving':label.includes('halloween')?'halloween':label.includes('fall')?'fall':label.includes('winter')?'winter':label.includes('spring')?'spring':label.includes('summer')?'summer':label.includes('patrick')?'patrick':label.includes('easter')?'easter':label.includes('groundhog')?'groundhog':label.includes('memorial')?'memorial':label.includes('fourth')?'july':label.includes('sports')?'sports':'auto';b.dataset.themeKind=kind;let icon=examples.find(x=>x[0]===kind)?.[1]||'✦';let span=document.createElement('span');span.className='theme-example';span.setAttribute('aria-hidden','true');span.textContent=icon;b.prepend(span)});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0));else setTimeout(init,0)})();</script></body></html>
+</style><script id="garage-theme-examples-v8">(function(){function init(){let root=document.getElementById('garage-theme-options');if(!root)return;let examples=[['auto','✦'],['sports','★'],['winter','❄'],['spring','✿'],['summer','☀'],['fall','🍂'],['groundhog','☀'],['patrick','☘'],['easter','🐣'],['memorial','★'],['july','★'],['halloween','🎃'],['thanksgiving','🍁'],['christmas','🎄']];let buttons=[...root.querySelectorAll('button')];buttons.forEach((b,i)=>{let label=b.textContent.toLowerCase(),kind=label.includes('christmas')?'christmas':label.includes('thanksgiving')?'thanksgiving':label.includes('halloween')?'halloween':label.includes('fall')?'fall':label.includes('winter')?'winter':label.includes('spring')?'spring':label.includes('summer')?'summer':label.includes('patrick')?'patrick':label.includes('easter')?'easter':label.includes('groundhog')?'groundhog':label.includes('memorial')?'memorial':label.includes('fourth')?'july':label.includes('sports')?'sports':'auto';b.dataset.themeKind=kind;let icon=examples.find(x=>x[0]===kind)?.[1]||'✦';let span=document.createElement('span');span.className='theme-example';span.setAttribute('aria-hidden','true');span.textContent=icon;b.prepend(span)});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,0));else setTimeout(init,0)})();</script><style id="garage-v9-polish">
+header h1 .neontitle{font-size:clamp(25px,2.85vw,54px)!important}
+header #decor{font-size:clamp(16px,1.65vw,32px)!important}
+header #clock{font-size:clamp(13px,1.13vw,23px)!important;min-width:clamp(55px,5.6vw,110px)!important}
+header .header-right{transform:translateY(4px)!important}
+header #dashboard-refresh{font-size:clamp(7px,.55vw,11px)!important;padding:1px 4px!important}
+#garage-fun-standalone .garage-fun-content{padding:4px 12px 20px!important}
+#garage-fun-standalone .garage-fun-question{font-size:clamp(31px,3.5vw,65px)!important;line-height:1.12!important}
+#garage-fun-standalone .garage-fun-answer{font-size:clamp(25px,2.65vw,49px)!important;line-height:1.12!important}
+#garage-fun-standalone .garage-fun-category{font-size:clamp(19px,1.85vw,36px)!important}
+#garage-score-connection{display:inline-flex;align-items:center;gap:4px;margin-left:12px;font-size:clamp(8px,.65vw,12px);font-weight:700;color:#5ef38b;vertical-align:middle;letter-spacing:0}
+#garage-score-connection:before{content:"";width:7px;height:7px;border-radius:50%;background:#48e577;box-shadow:0 0 5px #48e577}
+</style><script id="garage-scores-status-v9">(function(){function init(){let h=document.querySelector('.board .heading');if(!h||document.getElementById('garage-score-connection'))return;let el=document.createElement('span');el.id='garage-score-connection';el.textContent='CONNECTED';h.insertBefore(el,h.querySelector('#updated'));function update(){let status=document.getElementById('status');let connected=status&&/connected|live|updated/i.test(status.textContent)&&!/disconnected|not connected/i.test(status.textContent);el.style.color=connected?'#5ef38b':'#f7bd66';el.textContent=connected?'CONNECTED':'CHECKING';}update();setInterval(update,10000)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script></body></html>
