@@ -903,7 +903,109 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeBeach()
  function paint(){let theme=document.body.className.trim().split(/\s+/)[0];let d=decals[theme]||decals.classic;document.querySelectorAll('.season-decal').forEach((el,i)=>el.textContent=d[i]);}
  document.addEventListener('DOMContentLoaded',()=>{let app=document.getElementById('app');['left','right'].forEach(side=>{let e=document.createElement('span');e.className='season-decal '+side;e.setAttribute('aria-hidden','true');app.appendChild(e)});paint();new MutationObserver(paint).observe(document.body,{attributes:true,attributeFilter:['class']});});
 })();
-</script><script id="garage-fun-rotation">(function(){function init(){const category=document.getElementById('garage-fun-category'),question=document.getElementById('garage-fun-question'),answer=document.getElementById('garage-fun-answer'),count=document.getElementById('garage-fun-count'),next=document.getElementById('garage-fun-next');if(!category||!question||!answer||!count||!next)return;let index=0;const slides=[['GUESS THE CLASSIC ROCK LYRIC','Which song includes the lyric: “All that glitters is gold”?','Answer on slide 7 of 7'],['DAD JOKE','Why did the bicycle fall over?','Because it was two-tired.'],['BAR TRIVIA','Which band released the album 1984?','Van Halen'],['WORD OF THE DAY','FLUMMOX','To confuse or completely bewilder'],['THIS DAY IN HISTORY','On November 5, 1605…','The Gunpowder Plot was discovered in London'],['PICKLEBALL CORNER','What is the kitchen in pickleball?','The non-volley zone'],['CLASSIC ROCK LYRIC — ANSWER','Stairway to Heaven','Led Zeppelin']];function render(){let x=slides[index];category.textContent=x[0];question.textContent=x[1];answer.textContent=x[2];count.textContent=(index+1)+' / '+slides.length}function advance(){index=(index+1)%slides.length;render()}next.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();advance()});render();setInterval(advance,25000)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()})();</script><script id="v3819-interactions">
+</script><script id="garage-fun-rotation">(function(){
+function init(){
+ const category=document.getElementById('garage-fun-category'),question=document.getElementById('garage-fun-question'),answer=document.getElementById('garage-fun-answer'),count=document.getElementById('garage-fun-count'),next=document.getElementById('garage-fun-next');
+ if(!category||!question||!answer||!count||!next)return;
+ const lyrics=[
+ ['Which song includes the lyric: “All that glitters is gold”?','Stairway to Heaven','Led Zeppelin'],
+ ['Which song includes the lyric: “You can check out any time you like”?','Hotel California','Eagles'],
+ ['Which song includes the lyric: “Meet the new boss, same as the old boss”?','Won’t Get Fooled Again','The Who'],
+ ['Which song includes the lyric: “There’s a lady who’s sure”?','Stairway to Heaven','Led Zeppelin'],
+ ['Which song includes the lyric: “We don’t need no education”?','Another Brick in the Wall, Part 2','Pink Floyd'],
+ ['Which song includes the lyric: “I see a red door”?','Paint It Black','The Rolling Stones'],
+ ['Which song includes the lyric: “I wanna rock and roll all night”?','Rock and Roll All Nite','KISS'],
+ ['Which song includes the lyric: “Is this the real life”?','Bohemian Rhapsody','Queen'],
+ ['Which song includes the lyric: “Born to be wild”?','Born to Be Wild','Steppenwolf'],
+ ['Which song includes the lyric: “Take it easy”?','Take It Easy','Eagles'],
+ ['Which song includes the lyric: “She’s a good girl, loves her mama”?','Free Fallin’','Tom Petty'],
+ ['Which song includes the lyric: “Sweet home Alabama”?','Sweet Home Alabama','Lynyrd Skynyrd']
+ ];
+ const jokes=[
+ ['Why did the bicycle fall over?','Because it was two-tired.'],
+ ['What do you call a bear with no teeth?','A gummy bear.'],
+ ['Why did the scarecrow win an award?','He was outstanding in his field.'],
+ ['Why did the coffee file a police report?','It got mugged.'],
+ ['What do you call fake spaghetti?','An impasta.'],
+ ['Why don’t eggs tell jokes?','They would crack each other up.'],
+ ['Why was the math book sad?','It had too many problems.'],
+ ['How do trees get online?','They log in.'],
+ ['Why did the tomato blush?','It saw the salad dressing.'],
+ ['What did the ocean say to the beach?','Nothing. It just waved.'],
+ ['Why did the broom arrive late?','It overswept.'],
+ ['Why did the computer visit a doctor?','It caught a virus.']
+ ];
+ const trivia=[
+ ['Which band released the album 1984?','Van Halen'],
+ ['Who sang the album Moondance?','Van Morrison'],
+ ['Which band recorded Rumours?','Fleetwood Mac'],
+ ['Who was the drummer for Led Zeppelin?','John Bonham'],
+ ['Which band released The Joshua Tree?','U2'],
+ ['Which band recorded Back in Black?','AC/DC'],
+ ['Which artist recorded Born to Run?','Bruce Springsteen'],
+ ['Which band recorded Dark Side of the Moon?','Pink Floyd'],
+ ['Who sang the hit Maggie May?','Rod Stewart'],
+ ['Which band released Exile on Main St.?','The Rolling Stones'],
+ ['Which group recorded Hotel California?','Eagles'],
+ ['Who was the lead singer of The Doors?','Jim Morrison']
+ ];
+ const words=[
+ ['FLUMMOX','To confuse or completely bewilder'],
+ ['KERFUFFLE','A commotion or fuss'],
+ ['BAMBOOZLE','To trick or confuse someone'],
+ ['SERENDIPITY','Finding something good by chance'],
+ ['GOBSMACKED','Completely astonished'],
+ ['SHENANIGANS','Playful mischief or tricks'],
+ ['WHIMSICAL','Playfully unusual or fanciful'],
+ ['SKEDADDLE','To leave in a hurry'],
+ ['HULLABALOO','A noisy fuss or commotion'],
+ ['CATYWAMPUS','Crooked or out of alignment'],
+ ['DILLYDALLY','To waste time by delaying'],
+ ['LOLLYGAG','To spend time aimlessly']
+ ];
+ const history=[
+ ['On November 5, 1605…','The Gunpowder Plot was discovered in London'],
+ ['In 1969…','Apollo 11 landed humans on the Moon'],
+ ['In 1977…','Star Wars opened in movie theaters'],
+ ['In 1981…','MTV began broadcasting music videos'],
+ ['In 1970…','The first Earth Day was observed'],
+ ['In 1969…','The Woodstock festival took place in New York'],
+ ['In 1975…','Jaws became a major summer movie hit'],
+ ['In 1982…','E.T. the Extra-Terrestrial reached theaters'],
+ ['In 1976…','The United States celebrated its bicentennial'],
+ ['In 1964…','The Beatles appeared on The Ed Sullivan Show'],
+ ['In 1985…','Live Aid concerts were held in London and Philadelphia'],
+ ['In 1990…','The Hubble Space Telescope launched into orbit']
+ ];
+ const pickle=[
+ ['What is the kitchen in pickleball?','The non-volley zone'],
+ ['How many points usually win a standard game?','11, with a two-point lead'],
+ ['What is a dink?','A soft shot that lands in the opponent’s kitchen'],
+ ['How many bounces are required after a serve?','Two: one on each side'],
+ ['Where must the serve land?','In the diagonally opposite service court'],
+ ['What is a third-shot drop?','A soft shot designed to land in the kitchen'],
+ ['Can you volley while standing in the kitchen?','No'],
+ ['What is a rally?','A sequence of shots before a point ends'],
+ ['What does side out mean?','The serving side loses its turn to serve'],
+ ['What is a lob?','A high shot sent over an opponent'],
+ ['What is a poach in doubles?','Crossing over to intercept a partner’s shot'],
+ ['What is a let in pickleball?','A term sometimes used for a replayed rally']
+ ];
+ function dayKey(){return new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}
+ function dayNumber(){const p=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date());const v=k=>+p.find(x=>x.type===k).value;return Math.floor(Date.UTC(v('year'),v('month')-1,v('day'))/86400000)}
+ let index=0,lastDay=dayKey(),slides=[];
+ function pick(a,d,offset){return a[((d+offset)%a.length+a.length)%a.length]}
+ function build(){const d=dayNumber(),l=pick(lyrics,d,0),j=pick(jokes,d,3),t=pick(trivia,d,5),w=pick(words,d,7),h=pick(history,d,9),p=pick(pickle,d,11);
+ slides=[['GUESS THE CLASSIC ROCK LYRIC',l[0],'Answer on slide 7 of 7'],['DAD JOKE',j[0],j[1]],['BAR TRIVIA',t[0],t[1]],['WORD OF THE DAY',w[0],w[1]],['HISTORY FACT',h[0],h[1]],['PICKLEBALL CORNER',p[0],p[1]],['CLASSIC ROCK LYRIC — ANSWER',l[1],l[2]]]}
+ function render(){const x=slides[index];category.textContent=x[0];question.textContent=x[1];answer.textContent=x[2];count.textContent=(index+1)+' / '+slides.length}
+ function refreshDay(){const d=dayKey();if(d!==lastDay){lastDay=d;index=0;build();render()}}
+ function advance(){refreshDay();index=(index+1)%slides.length;render()}
+ next.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();advance()});
+ build();render();setInterval(advance,25000);setInterval(refreshDay,10000);
+ document.addEventListener('visibilitychange',refreshDay);window.addEventListener('focus',refreshDay);
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init()
+})();</script><script id="v3819-interactions">
 (function(){
  const names={'NFL':'NFL','NCAA FOOTBALL':'NCAA FB','NCAA MEN':'NCAA BB','NBA':'NBA','NHL':'NHL','MLB':'MLB'};
  const filterBar=document.getElementById('league-filters');
