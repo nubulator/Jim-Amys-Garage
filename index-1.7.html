@@ -1017,7 +1017,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   const buttons=[['ALL','ALL GAMES'],...Object.entries(names).map(([id,name])=>[id,name])];
   filterBar.innerHTML=buttons.map(([id,label])=>'<button type="button" data-league="'+safe(id)+'" class="'+(leagueFilter===id?'active':'')+'">'+safe(label)+'</button>').join('')+'<button type="button" class="line-button" id="daily-line-button">DAILY LINE</button>';
   filterBar.querySelectorAll('[data-league]').forEach(b=>b.onclick=()=>filterTo(b.dataset.league));
-  document.getElementById('daily-line-button').onclick=()=>{window.location.href='https://nubulator.github.io/Chris-basement/index-v3822.html?v=27'};
+  document.getElementById('daily-line-button').onclick=()=>window.openGarageSharedDailyLine();
  };
  function lineData(){
   const fav=myTeams.filter(Boolean);
@@ -1551,4 +1551,26 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 header h1{display:flex!important;align-items:center!important;min-width:0!important}
 header h1>.mini-traffic-cone{display:inline-block!important;position:relative!important;flex:0 0 clamp(9px,.75vw,14px)!important;width:clamp(9px,.75vw,14px)!important;height:clamp(13px,1.05vw,19px)!important;margin-left:clamp(4px,.55vw,9px)!important;margin-right:0!important;background:linear-gradient(to bottom,#ff8a00 0 26%,#fff 26% 41%,#ff7900 41% 66%,#fff 66% 79%,#ff7900 79% 100%)!important;clip-path:polygon(43% 4%,57% 4%,85% 81%,100% 81%,100% 98%,0 98%,0 81%,15% 81%)!important;pointer-events:none!important;filter:drop-shadow(0 0 1px #ffae36)!important}
 header .header-right>.mini-traffic-cone{display:none!important}
-</style></body></html>
+</style>
+<style id="garage-shared-daily-line-style">
+#garage-shared-daily-line[hidden]{display:none!important}
+#garage-shared-daily-line{position:fixed;inset:0;z-index:99999;background:#080c1c}
+#garage-shared-daily-line iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#080c1c}
+#garage-shared-daily-line .garage-line-back-cover{position:absolute;top:0;right:0;width:clamp(160px,25vw,430px);height:clamp(75px,12vh,155px);background:linear-gradient(100deg,transparent 0%,#0c2044 26%,#0c2044 100%);pointer-events:none}
+#garage-shared-daily-line .garage-line-back{position:absolute;top:clamp(8px,2.2vh,32px);right:clamp(12px,2vw,36px);background:#1265d5;color:#fff;border:2px solid #ffc66c;border-radius:9px;font-weight:900;font-size:clamp(13px,1.2vw,22px);padding:clamp(9px,1vh,17px) clamp(12px,1.5vw,26px);cursor:pointer;box-shadow:0 0 12px #ffb54d66}
+</style>
+<div id="garage-shared-daily-line" hidden aria-label="Shared six-game Daily Line">
+<iframe id="garage-shared-daily-line-frame" title="The Daily Line — Vegas sportsbook" loading="lazy" allow="fullscreen"></iframe>
+<div class="garage-line-back-cover"></div><button type="button" class="garage-line-back" onclick="window.closeGarageSharedDailyLine()">← BACK TO GARAGE</button>
+</div>
+<script id="garage-shared-daily-line-script">
+window.openGarageSharedDailyLine=function(){
+ const overlay=document.getElementById('garage-shared-daily-line');
+ const frame=document.getElementById('garage-shared-daily-line-frame');
+ if(!frame.getAttribute('src'))frame.setAttribute('src','https://nubulator.github.io/Chris-basement/index-v3822.html?v=27');
+ overlay.hidden=false;
+};
+window.closeGarageSharedDailyLine=function(){document.getElementById('garage-shared-daily-line').hidden=true;};
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!document.getElementById('garage-shared-daily-line').hidden)window.closeGarageSharedDailyLine()});
+</script>
+</body></html>
