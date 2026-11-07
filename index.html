@@ -141,8 +141,9 @@ main{grid-template-columns:minmax(0,54fr) minmax(0,10fr) minmax(0,36fr)!importan
 #games .garage-score-side .garage-football{font-size:clamp(12px,1.05vw,17px)}
 
 /* Football: teams | compact live field | scores. */
-#games .game:has(.garage-field) .teams{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(100px,25%) auto!important;align-items:center!important;column-gap:clamp(5px,.65vw,12px)!important}
+#games .game:has(.garage-field) .teams{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(110px,31%) auto!important;align-items:center!important;column-gap:clamp(5px,.65vw,12px)!important}
 #games .game:has(.garage-field) .teams>.garage-live-panel{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px}
+#games .garage-first-down{position:absolute;top:0;bottom:0;width:3px;transform:translateX(-50%);background:#ffd23b;box-shadow:0 0 4px #ffc400;z-index:1}
 #games .game:has(.garage-field) .teams>.score{grid-column:3;grid-row:1;text-align:right;line-height:1.15}
 #games .game:has(.garage-field) .garage-live-detail{display:flex;justify-content:space-between;gap:3px;margin:0;font-size:clamp(7px,.55vw,11px);white-space:nowrap}
 #games .game:has(.garage-field) .garage-field{width:100%;height:clamp(17px,1.9vh,24px);min-height:17px;margin:0}
@@ -800,6 +801,8 @@ function garageLivePanel(g){
  if(['NFL','NCAA FOOTBALL'].includes(g.league)&&g.drive){
  const d=g.drive,down=Number(d.down),dist=Number(d.distance),label=down>=1&&down<=4&&Number.isFinite(dist)?['','1st','2nd','3rd','4th'][down]+' & '+(dist===0?'Goal':dist):(d.downDistance||'');
  const yard=Number(d.yard),hasYard=d.yard!==null&&d.yard!==''&&Number.isFinite(yard)&&yard>=0&&yard<=100;
+ const firstYard=hasYard&&Number.isFinite(dist)&&dist>0&&yard+dist<=100?yard+dist:null;
+ const firstMarker=firstYard!==null?'<span class="garage-first-down" style="left:'+Math.max(5,Math.min(95,firstYard))+'%" title="First down line"></span>':'';
  return '<div class="garage-live-panel"><div class="garage-live-detail"><span>'+safe(label||'LIVE FOOTBALL')+'</span><span>'+safe(d.possession?d.possession+' possession':'')+'</span></div><div class="garage-field"><div class="garage-field-mid"></div>'+(hasYard?'<span class="garage-football" style="left:'+Math.max(5,Math.min(95,yard))+'%">🏈</span>':'')+'</div></div>';
  }
  if(g.league==='MLB'&&g.baseball){
