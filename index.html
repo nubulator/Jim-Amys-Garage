@@ -139,6 +139,14 @@ main{grid-template-columns:minmax(0,54fr) minmax(0,10fr) minmax(0,36fr)!importan
 #games .garage-score-side:has(.garage-field) .garage-live-detail{grid-column:2;grid-row:1}
 #games .garage-score-side:has(.garage-field) .garage-field{grid-column:2;grid-row:2}
 #games .garage-score-side .garage-football{font-size:clamp(12px,1.05vw,17px)}
+
+/* Football: teams | compact live field | scores. */
+#games .game:has(.garage-field) .teams{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(100px,25%) auto!important;align-items:center!important;column-gap:clamp(5px,.65vw,12px)!important}
+#games .game:has(.garage-field) .teams>.garage-live-panel{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px}
+#games .game:has(.garage-field) .teams>.score{grid-column:3;grid-row:1;text-align:right;line-height:1.15}
+#games .game:has(.garage-field) .garage-live-detail{display:flex;justify-content:space-between;gap:3px;margin:0;font-size:clamp(7px,.55vw,11px);white-space:nowrap}
+#games .game:has(.garage-field) .garage-field{width:100%;height:clamp(17px,1.9vh,24px);min-height:17px;margin:0}
+#games .game:has(.garage-field) .garage-football{font-size:clamp(12px,1vw,17px)}
 </style>
 <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
 <style id="v381-header-fix">
@@ -792,7 +800,7 @@ function garageLivePanel(g){
  if(['NFL','NCAA FOOTBALL'].includes(g.league)&&g.drive){
  const d=g.drive,down=Number(d.down),dist=Number(d.distance),label=down>=1&&down<=4&&Number.isFinite(dist)?['','1st','2nd','3rd','4th'][down]+' & '+(dist===0?'Goal':dist):(d.downDistance||'');
  const yard=Number(d.yard),hasYard=d.yard!==null&&d.yard!==''&&Number.isFinite(yard)&&yard>=0&&yard<=100;
- return '<div class="garage-live-detail"><span>'+safe(label||'LIVE FOOTBALL')+'</span><span>'+safe(d.possession?d.possession+' possession':'')+'</span></div><div class="garage-field"><div class="garage-field-mid"></div>'+(hasYard?'<span class="garage-football" style="left:'+Math.max(5,Math.min(95,yard))+'%">🏈</span>':'')+'</div>';
+ return '<div class="garage-live-panel"><div class="garage-live-detail"><span>'+safe(label||'LIVE FOOTBALL')+'</span><span>'+safe(d.possession?d.possession+' possession':'')+'</span></div><div class="garage-field"><div class="garage-field-mid"></div>'+(hasYard?'<span class="garage-football" style="left:'+Math.max(5,Math.min(95,yard))+'%">🏈</span>':'')+'</div></div>';
  }
  if(g.league==='MLB'&&g.baseball){
  const b=g.baseball;return '<div class="garage-live-detail"><span>⚾ '+safe(b.outs??'—')+' OUTS</span><span>COUNT '+safe(b.balls??'—')+'-'+safe(b.strikes??'—')+'</span></div><div class="garage-diamond"><span class="'+(b.second?'occupied':'')+'">◆</span><div><span class="'+(b.third?'occupied':'')+'">◆</span><span class="'+(b.first?'occupied':'')+'">◆</span></div></div>';
@@ -809,7 +817,7 @@ function display(){
  let current=leagueFilter==='ALL'&&page<2?(page===0?priorityTeams:otherTeams):filtered.slice((leagueFilter==='ALL'?page-2:page)*n,(leagueFilter==='ALL'?page-1:page+1)*n);
  $('games').classList.toggle('garage-favorites-page',leagueFilter==='ALL'&&page<2);
  $('games').style.setProperty('--favorite-rows',String(Math.max(1,current.length)));
- const gamesMarkup=current.map(g=>`<div class="game ${g.fav?'favorite':''}" ${leagueFilter==='ALL'&&page<2?`style="--team-watermark:url('${safe(favoriteTeams.find(t=>t.name===g.league)?.logo||g.awayLogo)}')"`:``}><div class="meta"><span>${safe(g.league)} ${g.live?'● LIVE':''}</span><span>${safe(g.status)}</span></div><div class="teams"><span style="min-width:0"><span class="teamline"><img src="${safe(g.awayLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.ar?`<span class="rank">#${g.ar}</span>`:''}${safe(g.away)}${g.awayRecord?'<small class="garage-record"> ('+safe(g.awayRecord)+')</small>':''}</span></span><span class="teamline"><img src="${safe(g.homeLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.hr?`<span class="rank">#${g.hr}</span>`:''}${safe(g.home)}${g.homeRecord?'<small class="garage-record"> ('+safe(g.homeRecord)+')</small>':''}</span></span></span><span class="garage-score-side"><span class="score">${!g.live&&!g.final?'VS':safe(g.as)+'<br>'+safe(g.hs)}</span>${garageLivePanel(g)}</span></div>${leagueFilter==='ALL'&&page===0?'<div class="priority-venue">'+(g.league==='Cleveland Browns'&&/Saints/i.test(g.home)?'AWAY • CAESARS SUPERDOME · NEW ORLEANS':g.league==='Ohio State Football'&&/Oregon/i.test(g.away)?'HOME • OHIO STADIUM · COLUMBUS':(g.home===g.away?'HOME GAME':'AT '+safe(g.home)+' HOME FIELD'))+'</div>':''}</div>`).join('');
+ const gamesMarkup=current.map(g=>`<div class="game ${g.fav?'favorite':''}" ${leagueFilter==='ALL'&&page<2?`style="--team-watermark:url('${safe(favoriteTeams.find(t=>t.name===g.league)?.logo||g.awayLogo)}')"`:``}><div class="meta"><span>${safe(g.league)} ${g.live?'● LIVE':''}</span><span>${safe(g.status)}</span></div><div class="teams"><span style="min-width:0"><span class="teamline"><img src="${safe(g.awayLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.ar?`<span class="rank">#${g.ar}</span>`:''}${safe(g.away)}${g.awayRecord?'<small class="garage-record"> ('+safe(g.awayRecord)+')</small>':''}</span></span><span class="teamline"><img src="${safe(g.homeLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.hr?`<span class="rank">#${g.hr}</span>`:''}${safe(g.home)}${g.homeRecord?'<small class="garage-record"> ('+safe(g.homeRecord)+')</small>':''}</span></span></span>${garageLivePanel(g)}<span class="score">${!g.live&&!g.final?'VS':safe(g.as)+'<br>'+safe(g.hs)}</span></div>${leagueFilter==='ALL'&&page===0?'<div class="priority-venue">'+(g.league==='Cleveland Browns'&&/Saints/i.test(g.home)?'AWAY • CAESARS SUPERDOME · NEW ORLEANS':g.league==='Ohio State Football'&&/Oregon/i.test(g.away)?'HOME • OHIO STADIUM · COLUMBUS':(g.home===g.away?'HOME GAME':'AT '+safe(g.home)+' HOME FIELD'))+'</div>':''}</div>`).join('');
  // Preserve existing score-card nodes when a refresh produces identical markup.
  if($('games').innerHTML!==gamesMarkup)$('games').innerHTML=gamesMarkup;
  $('updated').textContent=leagueFilter==='ALL'&&page<2?('MY TEAMS • '+(page===0?'Browns & Buckeyes':'other favorites')+' • '+(page+1)+'/2'):`${filtered.length} ${leagueFilter==='ALL'?'games':leagueFilter+' games'} • page ${page+1}/${pages}`;
