@@ -1607,4 +1607,14 @@ main .side>.panel:first-child{position:relative!important;isolation:isolate!impo
 main .side>.panel:first-child::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(10,24,44,.86),rgba(10,24,44,.7)),url("https://commons.wikimedia.org/wiki/Special:FilePath/New_Albany_City_Hall_1.jpg?width=1200") center 49%/cover no-repeat;opacity:.78;pointer-events:none}
 main .side>.panel:first-child h2,main .side>.panel:first-child p{position:relative;z-index:1}
 </style>
+
+<style id="garage-v19-header-controls-and-frame">
+/* Remove outer silver pinball frame, retain neon around content panels. */
+#app{border:0!important;border-radius:0!important;box-shadow:none!important}
+#app::after,#app::before{display:none!important}
+/* Stacked identical blue controls, with the holiday dropdown styled like Refresh. */
+header .header-right{display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:center!important;gap:clamp(4px,.5vh,9px)!important;width:clamp(135px,12.5vw,245px)!important;min-width:0!important}
+header .header-right #theme,header .header-right #dashboard-refresh{display:block!important;flex:none!important;width:100%!important;max-width:none!important;min-width:0!important;height:clamp(26px,3.5vh,43px)!important;min-height:0!important;box-sizing:border-box!important;margin:0!important;align-self:stretch!important;background:#1165ce!important;border:2px solid #52dcff!important;border-radius:9px!important;box-shadow:0 0 10px #25baff77!important;color:#fff!important;font:900 clamp(10px,.85vw,16px)/1 Arial,sans-serif!important;letter-spacing:.02em!important;text-align:center!important;padding:3px 9px!important;cursor:pointer!important}
+header .header-right #theme{appearance:none!important;-webkit-appearance:none!important;text-align-last:center!important;padding-right:17px!important;background-image:url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"%3E%3Cpath d="M1 1l5 5 5-5" stroke="white" stroke-width="2" fill="none"/%3E%3C/svg%3E')!important;background-position:right 8px center!important;background-repeat:no-repeat!important;background-size:10px 7px!important;background-color:#1165ce!important}
+</style>
 </body></html>
