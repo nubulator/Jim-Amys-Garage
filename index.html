@@ -141,8 +141,8 @@ main{grid-template-columns:minmax(0,54fr) minmax(0,10fr) minmax(0,36fr)!importan
 #games .garage-score-side .garage-football{font-size:clamp(12px,1.05vw,17px)}
 
 /* Football: teams | compact live field | scores. */
-#games .game:has(.garage-field) .teams{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(130px,38%) auto!important;align-items:center!important;column-gap:clamp(3px,.4vw,8px)!important}
-#games .game:has(.garage-field) .teams>.garage-live-panel{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px}
+#games .game:has(.garage-field) .teams{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(135px,41%) auto!important;align-items:center!important;column-gap:clamp(3px,.4vw,8px)!important}
+#games .game:has(.garage-field) .teams>.garage-live-panel{grid-column:2;grid-row:1;min-width:0;display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:2px;transform:translateY(4px)}
 #games .garage-first-down{position:absolute;top:0;bottom:0;width:3px;transform:translateX(-50%);background:#ffd23b;box-shadow:0 0 4px #ffc400;z-index:1}
 #games .game:has(.garage-field) .teams>.score{grid-column:3;grid-row:1;text-align:right;line-height:1.15}
 #games .game:has(.garage-field) .garage-live-detail{display:flex;justify-content:space-between;gap:3px;margin:0;font-size:clamp(7px,.55vw,11px);white-space:nowrap}
@@ -803,7 +803,7 @@ function garageLivePanel(g){
  const yard=Number(d.yard),hasYard=d.yard!==null&&d.yard!==''&&Number.isFinite(yard)&&yard>=0&&yard<=100;
  const firstYard=hasYard&&Number.isFinite(dist)&&dist>0&&yard+dist<=100?yard+dist:null;
  const firstMarker=firstYard!==null?'<span class="garage-first-down" style="left:'+Math.max(5,Math.min(95,firstYard))+'%" title="First down line"></span>':'';
- return '<div class="garage-live-panel"><div class="garage-live-detail"><span>'+safe(label||'LIVE FOOTBALL')+'</span><span>'+safe(d.possession?d.possession+' possession':'')+'</span></div><div class="garage-field"><div class="garage-field-mid"></div>'+(hasYard?'<span class="garage-football" style="left:'+Math.max(5,Math.min(95,yard))+'%">🏈</span>':'')+'</div></div>';
+ return '<div class="garage-live-panel"><div class="garage-live-detail"><span>'+safe(label||'LIVE FOOTBALL')+'</span><span>'+safe(d.possession?d.possession+' possession':'')+'</span></div><div class="garage-field"><div class="garage-field-mid"></div>'+firstMarker+(hasYard?'<span class="garage-football" style="left:'+Math.max(5,Math.min(95,yard))+'%">🏈</span>':'')+'</div></div>';
  }
  if(g.league==='MLB'&&g.baseball){
  const b=g.baseball;return '<div class="garage-live-detail"><span>⚾ '+safe(b.outs??'—')+' OUTS</span><span>COUNT '+safe(b.balls??'—')+'-'+safe(b.strikes??'—')+'</span></div><div class="garage-diamond"><span class="'+(b.second?'occupied':'')+'">◆</span><div><span class="'+(b.third?'occupied':'')+'">◆</span><span class="'+(b.first?'occupied':'')+'">◆</span></div></div>';
