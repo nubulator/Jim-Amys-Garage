@@ -961,7 +961,7 @@ async function fillGarageRecords(list){
    }catch(e){value=''}
    // If ESPN omits its team-record summary, calculate W-L from completed
    // regular-season games in the team's current-season schedule.
-   if(!/^\\d+-\\d+(?:-\\d+)?$/.test(String(value||''))){
+   if(!/^\d+-\d+(?:-\d+)?$/.test(String(value||''))){
     try{
      const [path,id]=key.split(':');
      const season=new Date().getFullYear()+(new Date().getMonth()>=6?1:0);
