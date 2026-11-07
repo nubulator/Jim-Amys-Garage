@@ -1017,7 +1017,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   const buttons=[['ALL','ALL GAMES'],...Object.entries(names).map(([id,name])=>[id,name])];
   filterBar.innerHTML=buttons.map(([id,label])=>'<button type="button" data-league="'+safe(id)+'" class="'+(leagueFilter===id?'active':'')+'">'+safe(label)+'</button>').join('')+'<button type="button" class="line-button" id="daily-line-button">DAILY LINE</button>';
   filterBar.querySelectorAll('[data-league]').forEach(b=>b.onclick=()=>filterTo(b.dataset.league));
-  document.getElementById('daily-line-button').onclick=openDailyLine;
+  document.getElementById('daily-line-button').onclick=()=>{window.location.href='https://nubulator.github.io/Chris-basement/index-v3822.html?v=27'};
  };
  function lineData(){
   const fav=myTeams.filter(Boolean);
