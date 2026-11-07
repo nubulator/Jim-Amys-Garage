@@ -627,6 +627,16 @@ header h1,header #decor,header .controls{transform:translateY(clamp(7px,1.2vh,18
 #games .game.favorite .teamline img{width:clamp(17px,1.65vw,30px)!important;height:clamp(17px,1.65vw,30px)!important;object-fit:contain!important}
 #games .game.favorite .score{font-size:clamp(17px,1.8vw,31px)!important}
 @media(max-width:900px){#games .game.favorite .teams{font-size:clamp(12px,1.5vw,20px)!important}#games .game.favorite .teamline img{width:clamp(15px,1.6vw,24px)!important;height:clamp(15px,1.6vw,24px)!important}}
+</style><style id="garage-live-details-v18">
+.garage-record{font-size:.62em;font-weight:700;color:#c9d9eb;white-space:nowrap}
+.garage-live-detail{display:flex;justify-content:space-around;align-items:center;gap:6px;font-size:clamp(9px,.72vw,14px);font-weight:900;color:#f4f8ff;line-height:1.1;margin:0 7px 2px}
+.garage-field{height:clamp(9px,1.4vh,18px);margin:0 9px 2px;position:relative;border:1px solid #c7ecff;background:repeating-linear-gradient(90deg,#136638 0%,#136638 9.8%,#21884b 10%,#21884b 19.8%);border-radius:3px}
+.garage-field-mid{position:absolute;left:50%;height:100%;border-left:1px solid #fff9}
+.garage-football{position:absolute;top:50%;transform:translate(-50%,-50%);font-size:clamp(11px,1.15vw,19px);line-height:1}
+.garage-diamond{text-align:center;line-height:.8;font-size:clamp(10px,1vw,18px);color:#35485a}
+.garage-diamond>div{display:flex;justify-content:center;gap:18px}
+.garage-diamond .occupied{color:#ffc64a;text-shadow:0 0 5px #ffc64a}
+#league-filters #garage-prev-page,#league-filters #garage-next-page{padding:3px 7px!important;flex-shrink:0}
 </style></head><body class="classic"><div id="app"><header><div class="pinball-bulbs" aria-hidden="true"></div><div class="pinball-mechanics" aria-hidden="true"><svg viewBox="0 0 460 118" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="steel"><stop stop-color="#fff"/><stop offset=".25" stop-color="#e6f3ff"/><stop offset=".55" stop-color="#7d8aa9"/><stop offset=".8" stop-color="#26263f"/><stop offset="1" stop-color="#f4d5fc"/></radialGradient><radialGradient id="cap"><stop stop-color="#fff"/><stop offset=".24" stop-color="#fbd6ff"/><stop offset=".5" stop-color="#f32c8a"/><stop offset=".76" stop-color="#6b1e91"/><stop offset="1" stop-color="#170e3b"/></radialGradient><linearGradient id="rubber" x2="0" y2="1"><stop stop-color="#fff5ef"/><stop offset=".25" stop-color="#ff6e6b"/><stop offset=".65" stop-color="#d51d44"/><stop offset="1" stop-color="#580e37"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <g transform="translate(37 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
 <g transform="translate(423 27)"><circle r="34" fill="#081329" stroke="#f2c9ff" stroke-width="5"/><circle r="28" fill="url(#steel)"/><circle r="22" fill="url(#cap)" stroke="#fff" stroke-width="2"/><ellipse cx="-7" cy="-10" rx="9" ry="5" fill="#fff" opacity=".65" transform="rotate(-30)"/><circle r="9" fill="url(#steel)"/></g>
@@ -1034,8 +1044,9 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   const available=[...new Set(games.map(g=>g.league))];
   /* Keep selected league visible even on days without games. */
   const buttons=[['ALL','ALL GAMES'],...Object.entries(names).map(([id,name])=>[id,name])];
-  filterBar.innerHTML=buttons.map(([id,label])=>'<button type="button" data-league="'+safe(id)+'" class="'+(leagueFilter===id?'active':'')+'">'+safe(label)+'</button>').join('')+'<button type="button" class="line-button" id="daily-line-button">DAILY LINE</button>';
+  filterBar.innerHTML=buttons.map(([id,label])=>'<button type="button" data-league="'+safe(id)+'" class="'+(leagueFilter===id?'active':'')+'">'+safe(label)+'</button>').join('')+'<button type="button" id="garage-prev-page" aria-label="Previous sports page">◀</button><button type="button" id="garage-next-page" aria-label="Next sports page">▶</button>'+'<button type="button" class="line-button" id="daily-line-button">DAILY LINE</button>';
   filterBar.querySelectorAll('[data-league]').forEach(b=>b.onclick=()=>filterTo(b.dataset.league));
+  document.getElementById('garage-prev-page').onclick=()=>{page--;display()};document.getElementById('garage-next-page').onclick=()=>{page++;display()};
   document.getElementById('daily-line-button').onclick=()=>window.openGarageSharedDailyLine();
  };
  function lineData(){
