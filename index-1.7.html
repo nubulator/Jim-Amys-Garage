@@ -881,7 +881,7 @@ window.openRadar=function(){
  if(latestPath){if(bigLayer)big.removeLayer(bigLayer);bigLayer=overlay(big,latestPath)}
  setTimeout(()=>big.invalidateSize(),100);
 };
-refresh();setInterval(refresh,300000);
+refresh();setInterval(refresh,60000);
 })();
 </script>
 <script id="beachControls">
