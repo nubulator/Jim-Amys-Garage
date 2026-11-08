@@ -1261,504 +1261,104 @@ function init(){
  if(!category||!question||!answer||!count||!next)return;
  const lyrics=[
  [
-  "Which song includes the lyric: “All that glitters is gold”?",
-  "Stairway to Heaven",
-  "Led Zeppelin"
- ],
- [
-  "Which song includes the lyric: “You can check out any time you like”?",
-  "Hotel California",
-  "Eagles"
- ],
- [
-  "Which song includes the lyric: “Meet the new boss, same as the old boss”?",
-  "Won’t Get Fooled Again",
-  "The Who"
- ],
- [
-  "Which song includes the lyric: “We don’t need no education”?",
-  "Another Brick in the Wall, Part 2",
-  "Pink Floyd"
- ],
- [
-  "Which song includes the lyric: “I see a red door”?",
-  "Paint It Black",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “I wanna rock and roll all night”?",
-  "Rock and Roll All Nite",
-  "KISS"
- ],
- [
-  "Which song includes the lyric: “Is this the real life”?",
-  "Bohemian Rhapsody",
-  "Queen"
- ],
- [
-  "Which song includes the lyric: “Born to be wild”?",
-  "Born to Be Wild",
-  "Steppenwolf"
- ],
- [
-  "Which song includes the lyric: “Take it easy”?",
-  "Take It Easy",
-  "Eagles"
- ],
- [
-  "Which song includes the lyric: “She’s a good girl, loves her mama”?",
-  "Free Fallin’",
-  "Tom Petty"
- ],
- [
-  "Which song includes the lyric: “Sweet home Alabama”?",
-  "Sweet Home Alabama",
-  "Lynyrd Skynyrd"
- ],
- [
-  "Which song includes the lyric: “Been a long time since I rock and rolled”?",
-  "Rock and Roll",
-  "Led Zeppelin"
- ],
- [
-  "Which song includes the lyric: “Smoke on the water”?",
-  "Smoke on the Water",
-  "Deep Purple"
- ],
- [
-  "Which song includes the lyric: “Highway to hell”?",
-  "Highway to Hell",
-  "AC/DC"
- ],
- [
-  "Which song includes the lyric: “You shook me all night long”?",
-  "You Shook Me All Night Long",
-  "AC/DC"
- ],
- [
-  "Which song includes the lyric: “Dream on, dream on”?",
-  "Dream On",
-  "Aerosmith"
- ],
- [
-  "Which song includes the lyric: “Walk this way”?",
-  "Walk This Way",
-  "Aerosmith"
- ],
- [
-  "Which song includes the lyric: “Sweet emotion”?",
-  "Sweet Emotion",
-  "Aerosmith"
- ],
- [
-  "Which song includes the lyric: “More than a feeling”?",
-  "More Than a Feeling",
-  "Boston"
- ],
- [
-  "Which song includes the lyric: “Peace of mind”?",
-  "Peace of Mind",
-  "Boston"
- ],
- [
-  "Which song includes the lyric: “Don’t look back”?",
-  "Don’t Look Back",
-  "Boston"
- ],
- [
-  "Which song includes the lyric: “Carry on my wayward son”?",
-  "Carry On Wayward Son",
-  "Kansas"
- ],
- [
-  "Which song includes the lyric: “Dust in the wind”?",
-  "Dust in the Wind",
-  "Kansas"
- ],
- [
-  "Which song includes the lyric: “Come sail away”?",
-  "Come Sail Away",
-  "Styx"
- ],
- [
-  "Which song includes the lyric: “Renegade, you had it made”?",
-  "Renegade",
-  "Styx"
- ],
- [
-  "Which song includes the lyric: “Mr. Roboto”?",
-  "Mr. Roboto",
-  "Styx"
- ],
- [
-  "Which song includes the lyric: “Don’t stop believin’”?",
-  "Don’t Stop Believin’",
-  "Journey"
- ],
- [
-  "Which song includes the lyric: “Any way you want it”?",
-  "Any Way You Want It",
-  "Journey"
- ],
- [
-  "Which song includes the lyric: “Wheel in the sky”?",
-  "Wheel in the Sky",
-  "Journey"
- ],
- [
-  "Which song includes the lyric: “Separate ways”?",
-  "Separate Ways (Worlds Apart)",
-  "Journey"
- ],
- [
-  "Which song includes the lyric: “Go your own way”?",
-  "Go Your Own Way",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “Sara, you’re the poet in my heart”?",
-  "Sara",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “Dreams unwind”?",
-  "Rhiannon",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “Tell me lies, tell me sweet little lies”?",
-  "Little Lies",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “Don’t stop thinking about tomorrow”?",
-  "Don’t Stop",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “You make loving fun”?",
-  "You Make Loving Fun",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “The chain keeps us together”?",
-  "The Chain",
-  "Fleetwood Mac"
- ],
- [
-  "Which song includes the lyric: “I want to break free”?",
-  "I Want to Break Free",
-  "Queen"
- ],
- [
-  "Which song includes the lyric: “We will rock you”?",
-  "We Will Rock You",
-  "Queen"
- ],
- [
-  "Which song includes the lyric: “We are the champions”?",
-  "We Are the Champions",
-  "Queen"
- ],
- [
-  "Which song includes the lyric: “Another one bites the dust”?",
-  "Another One Bites the Dust",
-  "Queen"
- ],
- [
-  "Which song includes the lyric: “Somebody to love”?",
-  "Somebody to Love",
-  "Queen"
- ],
- [
-  "Which song includes the lyric: “Under pressure”?",
-  "Under Pressure",
-  "Queen & David Bowie"
- ],
- [
-  "Which song includes the lyric: “Let’s dance”?",
-  "Let’s Dance",
-  "David Bowie"
- ],
- [
-  "Which song includes the lyric: “Ground control to Major Tom”?",
-  "Space Oddity",
-  "David Bowie"
- ],
- [
-  "Which song includes the lyric: “Rebel rebel”?",
-  "Rebel Rebel",
-  "David Bowie"
- ],
- [
-  "Which song includes the lyric: “Changes, turn and face the strange”?",
-  "Changes",
-  "David Bowie"
- ],
- [
-  "Which song includes the lyric: “Ziggy played guitar”?",
-  "Ziggy Stardust",
-  "David Bowie"
- ],
- [
-  "Which song includes the lyric: “Born in the U.S.A.”?",
-  "Born in the U.S.A.",
-  "Bruce Springsteen"
- ],
- [
-  "Which song includes the lyric: “Baby we were born to run”?",
-  "Born to Run",
-  "Bruce Springsteen"
- ],
- [
-  "Which song includes the lyric: “Dancing in the dark”?",
-  "Dancing in the Dark",
-  "Bruce Springsteen"
- ],
- [
-  "Which song includes the lyric: “Glory days”?",
-  "Glory Days",
-  "Bruce Springsteen"
- ],
- [
-  "Which song includes the lyric: “Hungry heart”?",
-  "Hungry Heart",
-  "Bruce Springsteen"
- ],
- [
-  "Which song includes the lyric: “Thunder road”?",
+  "Which classic-rock song includes the line “The screen door slams”?",
   "Thunder Road",
   "Bruce Springsteen"
  ],
  [
-  "Which song includes the lyric: “Badlands, you gotta live it every day”?",
-  "Badlands",
-  "Bruce Springsteen"
- ],
- [
-  "Which song includes the lyric: “Start me up”?",
-  "Start Me Up",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “You can’t always get what you want”?",
-  "You Can’t Always Get What You Want",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “I can’t get no satisfaction”?",
-  "(I Can’t Get No) Satisfaction",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “Jumpin’ Jack Flash”?",
-  "Jumpin’ Jack Flash",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “Angie, Angie”?",
-  "Angie",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “Gimme shelter”?",
-  "Gimme Shelter",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “Brown sugar”?",
-  "Brown Sugar",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “Beast of burden”?",
-  "Beast of Burden",
-  "The Rolling Stones"
- ],
- [
-  "Which song includes the lyric: “Roxanne, you don’t have to”?",
-  "Roxanne",
-  "The Police"
- ],
- [
-  "Which song includes the lyric: “I'll be watching you”? ",
-  "Every Breath You Take",
-  "The Police"
- ],
- [
-  "Which song includes the lyric: “Message in a bottle”?",
-  "Message in a Bottle",
-  "The Police"
- ],
- [
-  "Which song includes the lyric: “Don’t stand so close to me”?",
-  "Don’t Stand So Close to Me",
-  "The Police"
- ],
- [
-  "Which song includes the lyric: “Every little thing she does is magic”?",
-  "Every Little Thing She Does Is Magic",
-  "The Police"
- ],
- [
-  "Which song includes the lyric: “See the stone set in your eyes”?",
-  "With or Without You",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “I still haven’t found what I’m looking for”?",
-  "I Still Haven’t Found What I’m Looking For",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “Where the streets have no name”?",
-  "Where the Streets Have No Name",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “Sunday bloody Sunday”?",
-  "Sunday Bloody Sunday",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “Pride in the name of love”?",
-  "Pride (In the Name of Love)",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “It’s a beautiful day”?",
-  "Beautiful Day",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “One love, one life”?",
-  "One",
-  "U2"
- ],
- [
-  "Which song includes the lyric: “Jump! Go ahead and jump”?",
-  "Jump",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Panama, Panama”?",
-  "Panama",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Running with the devil”?",
-  "Runnin’ with the Devil",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Ain’t talkin’ ’bout love”?",
-  "Ain’t Talkin’ ’Bout Love",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Hot for teacher”?",
-  "Hot for Teacher",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Why can’t this be love”?",
-  "Why Can’t This Be Love",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Right now”?",
-  "Right Now",
-  "Van Halen"
- ],
- [
-  "Which song includes the lyric: “Black dog”?",
-  "Black Dog",
+  "Which classic-rock song includes the line “There's a lady who's sure”?",
+  "Stairway to Heaven",
   "Led Zeppelin"
  ],
  [
-  "Which song includes the lyric: “Whole lotta love”?",
-  "Whole Lotta Love",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “I pulled into Nazareth”?",
+  "The Weight",
+  "The Band"
  ],
  [
-  "Which song includes the lyric: “Ramble on”?",
-  "Ramble On",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “I saw a werewolf with a Chinese menu”?",
+  "Werewolves of London",
+  "Warren Zevon"
  ],
  [
-  "Which song includes the lyric: “Hey, hey, what can I do”?",
-  "Hey, Hey, What Can I Do",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “There is a house in New Orleans”?",
+  "The House of the Rising Sun",
+  "The Animals"
  ],
  [
-  "Which song includes the lyric: “If the sun refused to shine”?",
-  "Thank You",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “I've been to Hollywood”?",
+  "A Horse with No Name",
+  "America"
  ],
  [
-  "Which song includes the lyric: “Kashmir”?",
-  "Kashmir",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “Sitting on a park bench”?",
+  "Aqualung",
+  "Jethro Tull"
  ],
  [
-  "Which song includes the lyric: “Dazed and confused”?",
-  "Dazed and Confused",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “Well, I woke up this morning”?",
+  "Hard to Handle",
+  "The Black Crowes"
  ],
  [
-  "Which song includes the lyric: “Immigrant song”?",
-  "Immigrant Song",
-  "Led Zeppelin"
+  "Which classic-rock song includes the line “I went down to the crossroads”?",
+  "Crossroads",
+  "Cream"
  ],
  [
-  "Which song includes the lyric: “Baba O’Riley”?",
-  "Baba O’Riley",
+  "Which classic-rock song includes the line “We skipped the light fandango”?",
+  "A Whiter Shade of Pale",
+  "Procol Harum"
+ ],
+ [
+  "Which classic-rock song includes the line “Hello darkness, my old friend”?",
+  "The Sound of Silence",
+  "Simon & Garfunkel"
+ ],
+ [
+  "Which classic-rock song includes the line “You can check out any time you like”?",
+  "Hotel California",
+  "Eagles"
+ ],
+ [
+  "Which classic-rock song includes the line “Meet the new boss, same as the old boss”?",
+  "Won't Get Fooled Again",
   "The Who"
  ],
  [
-  "Which song includes the lyric: “Who are you”?",
-  "Who Are You",
-  "The Who"
+  "Which classic-rock song includes the line “I see a red door”?",
+  "Paint It Black",
+  "The Rolling Stones"
  ],
  [
-  "Which song includes the lyric: “Behind blue eyes”?",
-  "Behind Blue Eyes",
-  "The Who"
+  "Which classic-rock song includes the line “Is this the real life”?",
+  "Bohemian Rhapsody",
+  "Queen"
  ],
  [
-  "Which song includes the lyric: “Pinball wizard”?",
-  "Pinball Wizard",
-  "The Who"
+  "Which classic-rock song includes the line “She's a good girl, loves her mama”?",
+  "Free Fallin'",
+  "Tom Petty"
  ],
  [
-  "Which song includes the lyric: “My generation”?",
-  "My Generation",
-  "The Who"
+  "Which classic-rock song includes the line “Ground control to Major Tom”?",
+  "Space Oddity",
+  "David Bowie"
  ],
  [
-  "Which song includes the lyric: “See me, feel me”?",
-  "See Me, Feel Me",
-  "The Who"
+  "Which classic-rock song includes the line “Dreams unwind”?",
+  "Rhiannon",
+  "Fleetwood Mac"
  ],
  [
-  "Which song includes the lyric: “The boys are back in town”?",
-  "The Boys Are Back in Town",
-  "Thin Lizzy"
+  "Which classic-rock song includes the line “Been a long time since I rock and rolled”?",
+  "Rock and Roll",
+  "Led Zeppelin"
  ],
  [
-  "Which song includes the lyric: “Juke box hero”?",
-  "Juke Box Hero",
-  "Foreigner"
- ],
- [
-  "Which song includes the lyric: “Cold as ice”?",
-  "Cold as Ice",
-  "Foreigner"
- ],
- [
-  "Which song includes the lyric: “I want to know what love is”?",
-  "I Want to Know What Love Is",
-  "Foreigner"
+  "Which classic-rock song includes the line “All that glitters is gold”?",
+  "Stairway to Heaven",
+  "Led Zeppelin"
  ]
 ];
  const jokes=[["Why did the bicycle fall over?","Because it was two-tired."],["What do you call a bear with no teeth?","A gummy bear."],["Why did the scarecrow win an award?","He was outstanding in his field."],["Why did the coffee file a police report?","It got mugged."],["What do you call fake spaghetti?","An impasta."],["Why don’t eggs tell jokes?","They would crack each other up."],["Why was the math book sad?","It had too many problems."],["How do trees get online?","They log in."],["Why did the tomato blush?","It saw the salad dressing."],["What did the ocean say to the beach?","Nothing. It just waved."],["Why did the broom arrive late?","It overswept."],["Why did the computer visit a doctor?","It caught a virus."],["Why don't skeletons fight?","They don't have the guts."],["Why did the golfer bring two pairs of pants?","In case he got a hole in one."],["What do you call cheese that isn't yours?","Nacho cheese."],["Why did the cookie visit the doctor?","It felt crummy."],["What do you call a sleeping bull?","A bulldozer."],["Why can't a nose be twelve inches long?","Then it would be a foot."],["What do you call a fish wearing a bow tie?","Sofishticated."],["Why did the orange stop rolling?","It ran out of juice."],["Why don't scientists trust atoms?","They make up everything."],["Why was the calendar nervous?","Its days were numbered."],["How does a penguin build its house?","Igloos it together."],["What do you call a dinosaur with an extensive vocabulary?","A thesaurus."],["Why did the belt get arrested?","It held up a pair of pants."],["What do you call a factory that makes okay products?","A satisfactory."],["What do you call a boomerang that won't come back?","A stick."],["Why did the picture go to jail?","It was framed."],["What do you call a cow with no legs?","Ground beef."],["Why was the stadium so cool?","It was full of fans."],["Why did the banana go to the doctor?","It wasn't peeling well."],["What do you call a dog magician?","A labracadabrador."],["Why couldn't the pony sing?","It was a little hoarse."],["What do you call a pile of cats?","A meowtain."],["Why did the mushroom get invited to parties?","He was a fungi."],["Why was the computer cold?","It left its Windows open."],["How do you organize a space party?","You planet."],["Why did the music teacher need a ladder?","To reach the high notes."],["What kind of shoes do spies wear?","Sneakers."],["Why don't oysters share?","They're shellfish."],["What did the janitor say when he jumped out of the closet?","Supplies!"],["Why did the grape stop in the road?","It ran out of wine."],["Why did the chicken join a band?","It had the drumsticks."],["What do you call a sad strawberry?","A blueberry."],["Why did the lamp get a promotion?","It was outstanding in its field of light."],["Why was the belt so confident?","It had everything under control."],["What do you call an alligator in a vest?","An investigator."],["Why do bees have sticky hair?","They use honeycombs."],["What do you call a singing laptop?","A Dell."],["Why was the broom so popular?","It swept everyone off their feet."],["Why did the frog take the bus?","Its car got toad."],["What do you call a snowman in summer?","A puddle."],["Why did the scarecrow become a comedian?","He was outstanding in his field."],["How do you make a tissue dance?","Put a little boogie in it."],["Why did the baker stop making donuts?","He was fed up with the hole business."],["Why did the clock get in trouble?","It tocked too much."],["What do you call a bear caught in the rain?","A drizzly bear."],["Why did the bicycle refuse to stand?","It was two-tired."],["Why was the computer good at singing?","It had great processing power."],["What do you call a duck that gets good grades?","A wise quacker."],["Why did the tomato turn red?","It saw the salad dressing."],["Why don't eggs tell secrets?","They might crack."],["Why did the robot go on vacation?","To recharge its batteries."],["What did one wall say to the other?","I'll meet you at the corner."],["Why did the ocean break up with the beach?","It needed some space."],["What do you call a sleeping pizza?","A piZZZa."],["Why did the book join the police?","It wanted to go undercover."],["What did the zero say to the eight?","Nice belt!"],["Why did the barber win the race?","He knew a shortcut."],["What do you call a sheep without legs?","A cloud."],["Why did the baseball player get arrested?","He stole second base."],["Why did the pencil get an award?","It was on point."],["What did the left eye say to the right eye?","Between us, something smells."],["Why did the astronaut break up with the moon?","He needed space."],["What do you call a can opener that doesn't work?","A can't opener."],["Why was the math teacher so calm?","She knew how to work out problems."],["Why did the refrigerator hum?","It forgot the words."],["What do you call a cow playing guitar?","A moo-sician."],["Why did the keyboard go to therapy?","It had too many issues to press."],["What kind of tree fits in your hand?","A palm tree."],["Why was the football team so warm?","They had lots of fans."],["Why did the pirate learn the alphabet?","He kept getting lost at C."],["What do you call a rabbit with fleas?","Bugs Bunny."],["Why did the donut visit the dentist?","It needed a filling."],["Why did the clock go on vacation?","It needed time off."],["What do you call a horse that lives next door?","A neigh-bor."],["Why did the fish blush?","It saw the ocean's bottom."],["Why did the coffee taste like dirt?","It was freshly ground."],["What do you call a cow in an earthquake?","A milkshake."],["Why did the phone need glasses?","It lost its contacts."],["Why was the guitar upset?","Someone picked on it."],["Why did the computer go to the beach?","To surf the web."],["Why did the dog sit in the shade?","It didn't want to be a hot dog."],["What do you call a detective duck?","Sherquack Holmes."],["Why did the ladder get promoted?","It was always moving up."],["Why did the calendar go to school?","To improve its dates."],["Why did the sandwich go to the gym?","To get shredded."],["Why did the cat sit on the computer?","To keep an eye on the mouse."],["Why did the astronaut bring a broom?","To sweep through space."],["Why did the musician buy a new watch?","For better timing."]];
