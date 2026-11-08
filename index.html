@@ -2164,5 +2164,11 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #garage-theme-options button[data-value="christmas"]{background:#12693d!important;background-image:linear-gradient(115deg,#12693d,#bd293f)!important;color:#fff!important;text-shadow:0 2px 4px #0009!important}
 #garage-theme-options button[data-value="newyear"]{background:#342080!important;background-image:linear-gradient(115deg,#342080,#a450cc)!important;color:#fff!important;text-shadow:0 2px 4px #0009!important}
 #garage-theme-options button.selected{outline:3px solid #fff!important;outline-offset:-4px!important;box-shadow:0 0 0 3px #ffda64,0 0 16px #ffe08a!important}
+
+/* TV-safe two-line lyric layout: keep the answer cue and Next button clear. */
+.garage-fun-content:has(#garage-fun-question){gap:clamp(2px,.35vh,6px)!important;padding:4px 10px 30px!important;justify-content:center!important;min-height:0!important}
+.garage-fun-content:has(#garage-fun-question) .garage-fun-question{font-size:clamp(14px,1.38vw,25px)!important;line-height:1.12!important;max-width:96%!important;white-space:pre-line!important;overflow-wrap:break-word!important}
+.garage-fun-content:has(#garage-fun-question) .garage-fun-answer{font-size:clamp(12px,1.05vw,19px)!important;line-height:1.12!important;max-width:94%!important}
+.garage-fun-content:has(#garage-fun-question) .garage-fun-category{font-size:clamp(12px,1.1vw,20px)!important;line-height:1.08!important}
 </style>
 </body></html>
