@@ -878,7 +878,7 @@ function display(){
  let current=leagueFilter==='ALL'&&page<2?(page===0?priorityTeams:otherTeams):filtered.slice((leagueFilter==='ALL'?page-2:page)*n,(leagueFilter==='ALL'?page-1:page+1)*n);
  $('games').classList.toggle('garage-favorites-page',leagueFilter==='ALL'&&page<2);
  $('games').style.setProperty('--favorite-rows',String(Math.max(1,current.length)));
- const gamesMarkup=current.map(g=>`<div class="game ${g.fav?'favorite':''}" ${leagueFilter==='ALL'&&page<2?`style="--team-watermark:url('${safe(favoriteTeams.find(t=>t.name===g.league)?.logo||g.awayLogo)}')"`:``}><div class="meta"><span>${safe(g.league)} ${g.live?'● LIVE':''}</span><span>${safe(g.status)}</span></div><div class="teams"><span style="min-width:0"><span class="teamline"><img src="${safe(g.awayLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.ar?`<span class="rank">#${g.ar}</span>`:''}${safe(g.away)}${g.awayRecord?'<small class="garage-record"> ('+safe(g.awayRecord)+')</small>':''}</span></span><span class="teamline"><img src="${safe(g.homeLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.hr?`<span class="rank">#${g.hr}</span>`:''}${safe(g.home)}${g.homeRecord?'<small class="garage-record"> ('+safe(g.homeRecord)+')</small>':''}</span></span></span>${garageLivePanel(g)}<span class="score">${!g.live&&!g.final?'VS':safe(g.as)+'<br>'+safe(g.hs)}</span></div>${!g.live&&!g.final&&g.id?'<div class="sports-card-odds">'+safe(g.odds||'LINE: Pending  •  O/U: Pending')+'</div>':''}${leagueFilter==='ALL'&&page===0?'<div class="priority-venue">'+(g.league==='Cleveland Browns'&&/Saints/i.test(g.home)?'AWAY • CAESARS SUPERDOME · NEW ORLEANS':g.league==='Ohio State Football'&&/Oregon/i.test(g.away)?'HOME • OHIO STADIUM · COLUMBUS':(g.home===g.away?'HOME GAME':'AT '+safe(g.home)+' HOME FIELD'))+'</div>':''}</div>`).join('');
+ const gamesMarkup=current.map(g=>`<div class="game ${g.fav?'favorite':''}" ${leagueFilter==='ALL'&&page<2?`style="--team-watermark:url('${safe(favoriteTeams.find(t=>t.name===g.league)?.logo||g.awayLogo)}')"`:``}><div class="meta"><span>${safe(g.league)} ${g.live?'● LIVE':''}</span><span>${safe(g.status)}</span></div><div class="teams"><span style="min-width:0"><span class="teamline"><img src="${safe(g.awayLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.ar?`<span class="rank">#${g.ar}</span>`:''}<span class="team-label">${safe(g.away)}</span>${g.awayRecord?'<small class="garage-record"> ('+safe(g.awayRecord)+')</small>':''}</span></span><span class="teamline"><img src="${safe(g.homeLogo)}" alt="" onerror="this.style.display='none'"><span class="teamname">${g.hr?`<span class="rank">#${g.hr}</span>`:''}<span class="team-label">${safe(g.home)}</span>${g.homeRecord?'<small class="garage-record"> ('+safe(g.homeRecord)+')</small>':''}</span></span></span>${garageLivePanel(g)}<span class="score">${!g.live&&!g.final?'VS':safe(g.as)+'<br>'+safe(g.hs)}</span></div>${!g.live&&!g.final&&g.id?'<div class="sports-card-odds">'+safe(g.odds||'LINE: Unavailable  •  O/U: Unavailable')+'</div>':''}${leagueFilter==='ALL'&&page===0?'<div class="priority-venue">'+(g.league==='Cleveland Browns'&&/Saints/i.test(g.home)?'AWAY • CAESARS SUPERDOME · NEW ORLEANS':g.league==='Ohio State Football'&&/Oregon/i.test(g.away)?'HOME • OHIO STADIUM · COLUMBUS':(g.home===g.away?'HOME GAME':'AT '+safe(g.home)+' HOME FIELD'))+'</div>':''}</div>`).join('');
  // Preserve existing score-card nodes when a refresh produces identical markup.
  if($('games').innerHTML!==gamesMarkup)$('games').innerHTML=gamesMarkup;
  garageLoadFinalStats(current);
@@ -928,6 +928,40 @@ const favoriteTeams=[
  {league:'MLB',path:'baseball/mlb',id:'17',name:'Cincinnati Reds',logo:'https://a.espncdn.com/i/teamlogos/mlb/500/cin.png'},
  {league:'NHL',path:'hockey/nhl',id:'29',name:'Columbus Blue Jackets',logo:'https://a.espncdn.com/i/teamlogos/nhl/500/cbj.png'}
 ];
+// Shared odds normalization for scoreboards and event summaries.
+function publishedOdds(data){
+ const asList=x=>Array.isArray(x)?x:x&&typeof x==='object'?[x]:[];
+ const candidates=[...asList(data?.pickcenter),...asList(data?.odds),...asList(data?.header?.competitions?.[0]?.odds),...asList(data?.competitions?.[0]?.odds)];
+ const value=x=>{if(x==null||x==='')return null;if(typeof x==='object')return value(x.displayValue??x.value);return typeof x==='number'||typeof x==='string'?String(x):null};
+ for(const o of candidates){
+  const line=value(o.details)??value(o.pointSpread?.home?.close?.line)??value(o.spread);
+  const total=value(o.overUnder)??value(o.over_under)??value(o.total?.over?.close?.line);
+  if(line!==null||total!==null)return 'LINE: '+(line??'Unavailable')+' • O/U: '+(total===null?'Unavailable':total.replace(/^[ou]\s*/i,''));
+ }
+ return '';
+}
+const favoriteOddsRequests=new Map();
+async function datedFavoriteOdds(g,path){
+ if(!g.id||!Number.isFinite(g.date))return '';
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date(g.date));
+ const date=['year','month','day'].map(k=>parts.find(p=>p.type===k).value).join('');
+ const key=path+':'+date;let entry=favoriteOddsRequests.get(key);
+ if(!entry||Date.now()-entry.at>300000){
+  entry={at:Date.now(),promise:fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/scoreboard?dates='+date+'&limit=500',{cache:'no-store',signal:AbortSignal.timeout(10000)}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})};
+  favoriteOddsRequests.set(key,entry);
+ }
+ try{const data=await entry.promise;return publishedOdds((data.events||[]).find(e=>String(e.id)===String(g.id)))}catch{favoriteOddsRequests.delete(key);return ''}
+}
+async function refreshFavoriteOdds(g,path){
+ const existing=games.find(x=>x.id&&String(x.id)===String(g.id)&&x.odds);
+ if(existing)g.odds=existing.odds;
+ try{
+  const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store',signal:AbortSignal.timeout(10000)});
+  if(r.ok){const line=publishedOdds(await r.json());if(line)g.odds=line;}
+ }catch{}
+ if(!g.odds||/Pending|Unavailable|—/i.test(g.odds)){const line=await datedFavoriteOdds(g,path);if(line)g.odds=line;}
+}
+
 function teamPlaceholder(t,label){return {id:'',league:t.name,away:t.name,home:label,awayLogo:t.logo,homeLogo:'',as:'',hs:'',ar:0,hr:0,odds:'',status:label,live:false,final:false,date:0,fav:true}}
 async function loadMyTeams(){
  const now=Date.now(),month=new Date().getMonth();
@@ -953,7 +987,7 @@ async function loadMyTeams(){
       const rs=item?.record||item?.records||[];
       const list=Array.isArray(rs)?rs:[rs];
       const v=(list.find(x=>x.type==='total'||x.name==='overall')||list[0])?.summary||'';
-      return /^\\d+-\\d+(?:-\\d+)?$/.test(v)?v:'';
+      return /^\d+-\d+(?:-\d+)?$/.test(v)?v:'';
      };
      const sa=sc.find(x=>x.homeAway==='away'),sh=sc.find(x=>x.homeAway==='home');
      g.awayRecord=g.awayRecord||pickRecord(sa);
@@ -1015,16 +1049,8 @@ async function loadMyTeams(){
  }));
  display();
  await Promise.all(myTeams.filter(g=>g.id).map(async g=>{
-  try{
-   const path=favoriteTeams.find(t=>t.name===g.league)?.path;
-   if(!path)return;
-   const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store'});
-   if(!r.ok)return;
-   const j=await r.json();
-   const od=j.pickcenter?.[0]||j.header?.competitions?.[0]?.odds?.[0];
-   const spread=od?.details||od?.spread,ou=od?.overUnder;
-   if(spread!=null||ou!=null)g.odds='LINE: '+(spread??'Unavailable')+' • O/U: '+(ou??'Unavailable');
-  }catch(e){console.warn('Odds fallback',g.league,e)}
+  const path=favoriteTeams.find(t=>t.name===g.league)?.path;
+  if(path)await refreshFavoriteOdds(g,path);
  }));
  display();
 }
@@ -1957,7 +1983,7 @@ header .header-right>.mini-traffic-cone{display:none!important}
 window.openGarageSharedDailyLine=function(){
  const overlay=document.getElementById('garage-shared-daily-line');
  const frame=document.getElementById('garage-shared-daily-line-frame');
- if(!frame.getAttribute('src'))frame.setAttribute('src','https://nubulator.github.io/Chris-basement/index-v3822.html?view=daily-line&v=31');
+ if(!frame.getAttribute('src'))frame.setAttribute('src','https://nubulator.github.io/Chris-basement/index-v3822.html?view=daily-line&v=20261114-records-odds');
  overlay.hidden=false;
 };
 window.closeGarageSharedDailyLine=function(){document.getElementById('garage-shared-daily-line').hidden=true;};
@@ -2239,4 +2265,10 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 #app>header .controls #clock .garage-clock-time{font-size:clamp(11px,.95vw,18px)!important;line-height:1.1!important}
 #app>header .controls .header-right{grid-column:2!important;width:100%!important;max-width:100%!important;justify-self:end!important;gap:3px!important}
 #app>header .header-right #theme,#app>header .header-right #dashboard-refresh,#app>header .header-right #garage-game-day{width:100%!important;min-width:0!important;font-size:clamp(10px,.8vw,15px)!important;padding:0 3px!important;letter-spacing:0!important}
+</style><style id="sports-records-adjacent-20261114">
+/* Reserve room for the record; only the team label may truncate. */
+#games .game .teamline{min-width:0!important;width:100%!important}
+#games .game .teamname{display:flex!important;align-items:baseline!important;gap:.28em!important;min-width:0!important;max-width:100%!important;flex:1!important;white-space:nowrap!important}
+#games .game .teamname .team-label{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important;flex:0 1 auto!important}
+#games .game .teamname .team-record,#games .game .teamname .garage-record{display:inline!important;position:static!important;float:none!important;flex:0 0 auto!important;margin:0!important;white-space:nowrap!important;font-size:.65em!important;line-height:1.1!important;color:#dcecff!important}
 </style></body></html>
