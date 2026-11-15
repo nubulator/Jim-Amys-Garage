@@ -915,8 +915,7 @@ function readGame(e,league,query){
  const drive=st.state==='in'&&['NFL','NCAA FOOTBALL'].includes(league)?{yard:sit.possessionYardLine??sit.yardLine??null,possession:owner?.team?.abbreviation||'',downDistance:sit.downDistanceText||'',down:sit.down,distance:sit.distance,spot:sit.possessionText||sit.yardLineText||''}:null;
  const runner=v=>v===true||v===1||v==='1'||!!(v&&typeof v==='object');
  const baseball=st.state==='in'&&league==='MLB'?{first:runner(sit.onFirst),second:runner(sit.onSecond),third:runner(sit.onThird),outs:sit.outs??sit.count?.outs,balls:sit.balls??sit.count?.balls,strikes:sit.strikes??sit.count?.strikes}:null;
- let od=c.odds?.[0],spread=od?.details||od?.spread,ou=od?.overUnder;
- let odds=spread!=null||ou!=null?`LINE: ${spread??'—'}  •  O/U: ${ou??'—'}` :'';
+ let odds=publishedOdds(e);
  return {id:String(e.id),league,away,home,awayId:String(a.team?.id||''),homeId:String(h.team?.id||''),awayRecord:record(a),homeRecord:record(h),drive,baseball,awayLogo:a.team?.logo||a.team?.logos?.[0]?.href||teamLogo(league,a.team),homeLogo:h.team?.logo||h.team?.logos?.[0]?.href||teamLogo(league,h.team),as:a.score??'',hs:h.score??'',ar,hr,odds,status:st.shortDetail||'Scheduled',live:st.state==='in',final:st.state==='post',date:Date.parse(e.date),fav:/Ohio State|Buckeyes|Cleveland Browns|Cincinnati Bengals|Cleveland Cavaliers|Cleveland Guardians|Columbus Blue Jackets/i.test(away+' '+home),bigTen:bigTen(a)||bigTen(h),top25:!!(ar||hr),fromTop25:false,fromBigTen:false};
 }
 
@@ -932,13 +931,18 @@ const favoriteTeams=[
 function publishedOdds(data){
  const asList=x=>Array.isArray(x)?x:x&&typeof x==='object'?[x]:[];
  const candidates=[...asList(data?.pickcenter),...asList(data?.odds),...asList(data?.header?.competitions?.[0]?.odds),...asList(data?.competitions?.[0]?.odds)];
- const value=x=>{if(x==null||x==='')return null;if(typeof x==='object')return value(x.displayValue??x.value);return typeof x==='number'||typeof x==='string'?String(x):null};
+ const value=x=>{if(x==null)return null;if(typeof x==='object')return value(x.displayValue??x.value);const s=String(x).trim();return !s||/^(?:Unavailable|Pending|Not published|—|--)$/i.test(s)?null:s};
+ let line=null,total=null;
  for(const o of candidates){
-  const line=value(o.details)??value(o.pointSpread?.home?.close?.line)??value(o.spread);
-  const total=value(o.overUnder)??value(o.over_under)??value(o.total?.over?.close?.line);
-  if(line!==null||total!==null)return 'LINE: '+(line??'Unavailable')+' • O/U: '+(total===null?'Unavailable':total.replace(/^[ou]\s*/i,''));
+  line=line??value(o.details)??value(o.pointSpread?.home?.close?.line)??value(o.spread);
+  total=total??value(o.overUnder)??value(o.over_under)??value(o.total?.over?.close?.line)??value(o.total?.under?.close?.line);
+  if(line!==null&&total!==null)break;
  }
- return '';
+ return line!==null||total!==null?'LINE: '+(line??'Unavailable')+' • O/U: '+(total===null?'Unavailable':total.replace(/^[ou]\s*/i,'')):'';
+}
+function mergePublishedOdds(current,incoming){
+ const parts=s=>{const m=String(s||'').match(/^LINE:\s*(.*?)\s*•\s*O\/U:\s*(.*?)\s*$/);return m?{details:m[1],overUnder:m[2]}:{}};
+ return publishedOdds({odds:[parts(incoming),parts(current)]});
 }
 const favoriteOddsRequests=new Map();
 async function datedFavoriteOdds(g,path){
@@ -954,11 +958,11 @@ async function datedFavoriteOdds(g,path){
 }
 async function refreshFavoriteOdds(g,path){
  const existing=games.find(x=>x.id&&String(x.id)===String(g.id)&&x.odds);
- if(existing)g.odds=existing.odds;
+ if(existing)g.odds=mergePublishedOdds(g.odds,existing.odds);
  try{
   const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store',signal:AbortSignal.timeout(10000)});
   if(r.ok){
-   const data=await r.json(),line=publishedOdds(data);if(line)g.odds=line;
+   const data=await r.json(),line=publishedOdds(data);if(line)g.odds=mergePublishedOdds(g.odds,line);
    const competitors=data.header?.competitions?.[0]?.competitors||[];
    for(const side of ['away','home']){
     const competitor=competitors.find(x=>x.homeAway===side);
@@ -970,7 +974,7 @@ async function refreshFavoriteOdds(g,path){
    }
   }
  }catch{}
- if(!g.odds||/Pending|Unavailable|—/i.test(g.odds)){const line=await datedFavoriteOdds(g,path);if(line)g.odds=line;}
+ if(!g.odds||/Pending|Unavailable|—/i.test(g.odds)){const line=await datedFavoriteOdds(g,path);if(line)g.odds=mergePublishedOdds(g.odds,line);}
 }
 
 function teamPlaceholder(t,label){return {id:'',league:t.name,away:t.name,home:label,awayLogo:t.logo,homeLogo:'',as:'',hs:'',ar:0,hr:0,odds:'',status:label,live:false,final:false,date:0,fav:true}}
@@ -1146,8 +1150,8 @@ async function sports(){
  for(let g of fresh){let key=g.league+':'+g.id,old=byId.get(key);
   if(!old){byId.set(key,g);continue}
   // Prefer whichever response has rankings and published odds.
-  let best=(Number(g.top25)+Number(!g.odds.includes('Not published')))>(Number(old.top25)+Number(!old.odds.includes('Not published')))?g:old;
-  byId.set(key,{...best,top25:g.top25||old.top25,fromTop25:g.fromTop25||old.fromTop25,bigTen:g.bigTen||old.bigTen,fromBigTen:g.fromBigTen||old.fromBigTen})
+  let best=(Number(g.top25)+Number(!!g.odds))>(Number(old.top25)+Number(!!old.odds))?g:old;
+  byId.set(key,{...best,odds:mergePublishedOdds(old.odds,g.odds),awayRecord:best.awayRecord||g.awayRecord||old.awayRecord,homeRecord:best.homeRecord||g.homeRecord||old.homeRecord,top25:g.top25||old.top25,fromTop25:g.fromTop25||old.fromTop25,bigTen:g.bigTen||old.bigTen,fromBigTen:g.fromBigTen||old.fromBigTen})
  }
  let now=Date.now();
  const ohioDay=d=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York',year:'numeric',month:'2-digit',day:'2-digit'}).format(d);
