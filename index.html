@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Jim &amp; Amy's Garage Pinball Sports Center V1.39.1</title>
+<html><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Jim &amp; Amy's Garage Pinball Sports Center V1.39.1</title><script src="./sports-feed.js?v=20261117-live"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#0a101c;color:#f3f6fc;font:16px Arial,sans-serif;overflow:hidden}body.christmas{--accent:#24ae77}body.halloween{--accent:#f48729}body.thanksgiving{--accent:#c8793b}body.classic{--accent:#d83845}:root{--accent:#d83845}#app{height:100vh;display:grid;grid-template-rows:10% 81% 9%;background:radial-gradient(ellipse at top,#243149,#090e17 75%)}header{display:flex;justify-content:space-between;align-items:center;padding:0 2%;border-bottom:3px solid var(--accent)}h1{font-size:clamp(22px,3vw,55px);margin:0;letter-spacing:2px}h1 span{color:var(--accent)}.controls{display:flex;align-items:center;gap:14px;font-size:clamp(12px,1.2vw,20px)}select{background:#202e43;color:white;padding:7px;border:1px solid #66788c;border-radius:5px}main{min-height:0;display:grid;grid-template-columns:77% 23%;gap:10px;padding:10px}.board{display:grid;grid-template-rows:6% 94%;min-height:0}.heading{background:#26354e;border-left:5px solid var(--accent);padding:5px 12px;font-weight:bold;font-size:clamp(14px,1.5vw,28px)}#games{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,minmax(0,1fr));gap:8px;padding-top:8px;min-height:0}.game{background:linear-gradient(110deg,#202d41,#121b2b);border:1px solid #35465e;border-radius:8px;padding:.55vh .85vw;display:flex;flex-direction:column;justify-content:center}.game.favorite{border-left:5px solid #ffc55c}.meta{color:#afc0d5;font-size:clamp(11px,1vw,20px);display:flex;justify-content:space-between;margin-bottom:1vh}.teams{display:flex;justify-content:space-between;gap:8px;font-size:clamp(18px,1.9vw,38px);font-weight:800}.score{color:#ffca74;white-space:nowrap;font-size:1.18em}.teamline{display:flex;align-items:center;gap:.6vw;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.teamline img{width:clamp(23px,2.2vw,48px);height:clamp(23px,2.2vw,48px);object-fit:contain;flex-shrink:0}.teamname{overflow:hidden;text-overflow:ellipsis}.meta{margin-bottom:.3vh}.odds{font-size:clamp(10px,.9vw,18px);color:#c5d5e8;margin-top:.35vh;white-space:nowrap}.rank{color:#ffcb70;margin-right:.25em}.side{display:grid;grid-template-rows:19% 48% 23% 10%;gap:7px;min-height:0}.panel{background:#172237;border:1px solid #36485f;border-radius:8px;padding:10px;overflow:hidden}.panel h2{color:#ffc66b;font-size:clamp(13px,1.15vw,23px);margin:0 0 8px}.panel p{margin:5px 0;font-size:clamp(12px,1.2vw,23px)}iframe{width:100%;height:calc(100% - 26px);border:0;border-radius:5px}.sponsors{display:flex;align-items:center;justify-content:center;text-align:center;font-size:clamp(10px,.9vw,18px);color:#c5d1df}footer{display:flex;align-items:center;overflow:hidden;background:#111b2c;border-top:3px solid var(--accent)}footer strong{height:100%;background:var(--accent);padding:0 20px;display:flex;align-items:center;white-space:nowrap;font-size:clamp(14px,1.6vw,30px)}.ticker{flex:1;overflow:hidden}.ticker span{display:inline-block;white-space:nowrap;padding-left:100%;font-size:clamp(15px,1.5vw,29px);font-weight:bold;animation:marquee 65s linear infinite}@keyframes marquee{to{transform:translateX(-100%)}}.status{color:#8cebb0}#forecast{font-size:clamp(11px,1vw,19px);line-height:1.65}@media(max-width:800px){main{grid-template-columns:70% 30%}#games{grid-template-columns:1fr;grid-template-rows:repeat(4,minmax(0,1fr))}}
  .sponsors{flex-direction:column;gap:4px;padding:5px!important}.sponsor-label{font-size:clamp(9px,.7vw,13px);color:#b8c6d8}.sponsor-brands{display:flex;justify-content:center;align-items:center;gap:clamp(4px,.6vw,14px);flex-wrap:wrap}.sponsor-brands b{font-size:clamp(9px,.85vw,17px);white-space:nowrap;letter-spacing:-.4px}.captain{color:#e9b878}.tea{color:#f4d45b}.coke{color:#e7edf8;font-style:italic;text-shadow:1px 1px #b62d36}.teamline img{width:clamp(20px,2.4vw,42px);height:clamp(20px,2.4vw,42px);object-fit:contain;flex-shrink:0}.teamline{display:flex;align-items:center;gap:7px;min-width:0}.teamname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.odds{min-height:1.2em}footer{min-height:0} .ticker span{animation-duration:55s} 
@@ -844,7 +844,7 @@ async function garageLoadFinalStats(current){
  pending.forEach(g=>garageFinalStatsCache.set(garageFootballLeague(g)+':'+g.id,{stats:null}));
  await Promise.all(pending.map(async g=>{
   const league=garageFootballLeague(g),key=league+':'+g.id,path=league==='NFL'?'football/nfl':'football/college-football';
-  try{const res=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store'});if(!res.ok)throw Error('Stats '+res.status);garageFinalStatsCache.set(key,{stats:garageReadFinalStats(await res.json())});}
+  try{const res=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store'});if(!res.ok)throw Error('Stats '+res.status);garageFinalStatsCache.set(key,{stats:garageReadFinalStats(await res.json())});}
   catch(e){console.warn('Final football stats unavailable',e)}
  }));
  display();
@@ -928,8 +928,7 @@ function readGame(e,league,query){
  const drive=st.state==='in'&&['NFL','NCAA FOOTBALL'].includes(league)?{yard:sit.possessionYardLine??sit.yardLine??null,possession:owner?.team?.abbreviation||'',downDistance:sit.downDistanceText||'',down:sit.down,distance:sit.distance,spot:sit.possessionText||sit.yardLineText||''}:null;
  const runner=v=>v===true||v===1||v==='1'||!!(v&&typeof v==='object');
  const baseball=st.state==='in'&&league==='MLB'?{first:runner(sit.onFirst),second:runner(sit.onSecond),third:runner(sit.onThird),outs:sit.outs??sit.count?.outs,balls:sit.balls??sit.count?.balls,strikes:sit.strikes??sit.count?.strikes}:null;
- let od=c.odds?.[0],spread=od?.details||od?.spread,ou=od?.overUnder;
- let odds=spread!=null||ou!=null?`LINE: ${spread??'—'}  •  O/U: ${ou??'—'}` :'';
+ let odds=publishedOdds(e,league);
  return {id:String(e.id),league,away,home,awayId:String(a.team?.id||''),homeId:String(h.team?.id||''),awayRecord:record(a),homeRecord:record(h),drive,baseball,awayLogo:a.team?.logo||a.team?.logos?.[0]?.href||teamLogo(league,a.team),homeLogo:h.team?.logo||h.team?.logos?.[0]?.href||teamLogo(league,h.team),as:a.score??'',hs:h.score??'',ar,hr,odds,status:st.shortDetail||'Scheduled',live:st.state==='in',final:st.state==='post',date:Date.parse(e.date),fav:/Ohio State|Buckeyes|Cleveland Browns|Cincinnati Bengals|Cleveland Cavaliers|Cleveland Guardians|Columbus Blue Jackets/i.test(away+' '+home),bigTen:bigTen(a)||bigTen(h),top25:!!(ar||hr),fromTop25:false,fromBigTen:false};
 }
 
@@ -942,17 +941,7 @@ const favoriteTeams=[
  {league:'NHL',path:'hockey/nhl',id:'29',name:'Columbus Blue Jackets',logo:'https://a.espncdn.com/i/teamlogos/nhl/500/cbj.png'}
 ];
 // Shared odds normalization for scoreboards and event summaries.
-function publishedOdds(data){
- const asList=x=>Array.isArray(x)?x:x&&typeof x==='object'?[x]:[];
- const candidates=[...asList(data?.pickcenter),...asList(data?.odds),...asList(data?.header?.competitions?.[0]?.odds),...asList(data?.competitions?.[0]?.odds)];
- const value=x=>{if(x==null||x==='')return null;if(typeof x==='object')return value(x.displayValue??x.value);return typeof x==='number'||typeof x==='string'?String(x):null};
- for(const o of candidates){
-  const line=value(o.details)??value(o.pointSpread?.home?.close?.line)??value(o.spread);
-  const total=value(o.overUnder)??value(o.over_under)??value(o.total?.over?.close?.line);
-  if(line!==null||total!==null)return 'LINE: '+(line??'Unavailable')+' • O/U: '+(total===null?'Unavailable':total.replace(/^[ou]\s*/i,''));
- }
- return '';
-}
+function publishedOdds(data,league=''){return IsonSports.publishedOdds(data,league);}
 function mergePublishedOdds(current,incoming){
  const parts=s=>{const m=String(s||'').match(/^LINE:\s*(.*?)\s*•\s*O\/U:\s*(.*?)\s*$/);return m?{details:m[1],overUnder:m[2]}:{}};
  return publishedOdds({odds:[parts(incoming),parts(current)]});
@@ -964,18 +953,18 @@ async function datedFavoriteOdds(g,path){
  const date=['year','month','day'].map(k=>parts.find(p=>p.type===k).value).join('');
  const key=path+':'+date;let entry=favoriteOddsRequests.get(key);
  if(!entry||Date.now()-entry.at>300000){
-  entry={at:Date.now(),promise:fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/scoreboard?dates='+date+'&limit=500',{cache:'no-store',signal:AbortSignal.timeout(10000)}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})};
+  entry={at:Date.now(),promise:IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/scoreboard?dates='+date+'&limit=500',{cache:'no-store',signal:AbortSignal.timeout(10000)}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})};
   favoriteOddsRequests.set(key,entry);
  }
- try{const data=await entry.promise;return publishedOdds((data.events||[]).find(e=>String(e.id)===String(g.id)))}catch{favoriteOddsRequests.delete(key);return ''}
+ try{const data=await entry.promise;return publishedOdds((data.events||[]).find(e=>String(e.id)===String(g.id)),path)}catch{favoriteOddsRequests.delete(key);return ''}
 }
 async function refreshFavoriteOdds(g,path){
  const existing=games.find(x=>x.id&&String(x.id)===String(g.id)&&x.odds);
  if(existing)g.odds=existing.odds;
  try{
-  const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store',signal:AbortSignal.timeout(10000)});
+  const r=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store',signal:AbortSignal.timeout(10000)});
   if(r.ok){
-   const data=await r.json(),line=publishedOdds(data);if(line)g.odds=line;
+   const data=await r.json(),line=publishedOdds(data,path);if(line)g.odds=line;
    const competitors=data.header?.competitions?.[0]?.competitors||[];
    for(const side of ['away','home']){
     const competitor=competitors.find(x=>x.homeAway===side);
@@ -997,7 +986,7 @@ async function loadMyTeams(){
  if(active.some(t=>t.league==='MLB'))active=active.filter(t=>t.league!=='NHL');
  const results=await Promise.all(active.map(async t=>{
   try{
-   let r=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+t.path+'/teams/'+t.id+'/schedule?limit=300',{cache:'no-store'});
+   let r=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+t.path+'/teams/'+t.id+'/schedule?limit=300',{cache:'no-store'});
    if(!r.ok)throw Error('HTTP '+r.status);
    let j=await r.json();
    let next=(j.events||[]).filter(e=>Date.parse(e.date)>now-1800000).sort((a,b)=>Date.parse(a.date)-Date.parse(b.date))[0];
@@ -1007,7 +996,7 @@ async function loadMyTeams(){
    g.sportLeague=t.league;g.league=t.name;g.fav=true;
    // Schedule responses often omit the competitor records. Check the event summary.
    try{
-    const sr=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+t.path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store'});
+    const sr=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+t.path+'/summary?event='+encodeURIComponent(g.id),{cache:'no-store'});
     if(sr.ok){
      const sj=await sr.json();
      const sc=sj.header?.competitions?.[0]?.competitors||[];
@@ -1063,7 +1052,7 @@ async function loadMyTeams(){
  await Promise.all(myTeams.filter(g=>g.id).map(async g=>{
    const t=favoriteTeams.find(t=>t.name===g.league);if(!t)return;
    try{
-     const res=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+t.path+'/teams/'+t.id,{cache:'no-store'});
+     const res=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+t.path+'/teams/'+t.id,{cache:'no-store'});
      if(!res.ok)return;const data=await res.json(),tm=data.team||{};
      const items=tm.record?.items||tm.record||[];
      const record=Array.isArray(items)?(items.find(x=>x.type==='total'||x.name==='overall')||items[0])?.summary:'';
@@ -1101,7 +1090,7 @@ async function fillGarageRecords(list){
   if(value===undefined){
    try{
     const [path,id]=key.split(':');
-    const resp=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/teams/'+id,{cache:'no-store'});
+    const resp=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/teams/'+id,{cache:'no-store'});
     const tm=(await resp.json()).team||{};
     const entries=tm.record?.items||tm.record||tm.records||[];
     const overall=Array.isArray(entries)?(entries.find(v=>v.type==='total'||v.name==='overall')||entries[0]):null;
@@ -1125,7 +1114,7 @@ async function fillGarageRecords(list){
 const season=path==='football/nfl'||path==='football/college-football'||path==='baseball/mlb'
  ?year-(month<2?1:0)
  :year+(month>=6?1:0);
-     const sr=await fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/teams/'+id+'/schedule?season='+season+'&limit=300',{cache:'no-store'});
+     const sr=await IsonSports.fetch('https://site.api.espn.com/apis/site/v2/sports/'+path+'/teams/'+id+'/schedule?season='+season+'&limit=300',{cache:'no-store'});
      if(sr.ok){
       const sj=await sr.json();let wins=0,losses=0;
       for(const event of (sj.events||[])){
@@ -1155,7 +1144,7 @@ async function sports(){
  const part=k=>parts.find(p=>p.type===k)?.value||'';
  const sportsDate=part('year')+part('month')+part('day');
  let results=await Promise.allSettled(leagues.map(async([league,path,query])=>{
-  let r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard?limit=300&dates=${sportsDate}${query}`,{cache:'no-store'});if(!r.ok)throw Error(r.status);
+  let r=await IsonSports.fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard?limit=300&dates=${sportsDate}${query}`,{cache:'no-store'});if(!r.ok)throw Error(r.status);
   let j=await r.json();return (j.events||[]).map(e=>readGame(e,league,query)).filter(Boolean)
  }));
  let fresh=results.filter(x=>x.status==='fulfilled').flatMap(x=>x.value);
